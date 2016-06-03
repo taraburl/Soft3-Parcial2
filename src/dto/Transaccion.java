@@ -6,6 +6,7 @@ public class Transaccion {
     private int idCuenta;
     private String tipo;
     private int idCategoria;
+    private String descripcion;
     private double monto;
     private String fechaHora;
 
@@ -60,5 +61,15 @@ public class Transaccion {
     public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+    
 
 }
