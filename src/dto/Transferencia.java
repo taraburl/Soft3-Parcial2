@@ -9,6 +9,7 @@ public class Transferencia {
     private double monto;
     private String fechaHora;
     private String descripcion;
+    private String tipo;
 
     public Transferencia() {
         ;
@@ -68,6 +69,14 @@ public class Transferencia {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
 }
