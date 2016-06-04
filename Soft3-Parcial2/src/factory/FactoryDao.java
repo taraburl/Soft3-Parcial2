@@ -25,8 +25,6 @@ public abstract class FactoryDao {
     public abstract TransferenciaDao getNewTransferenciaDao();
 
     public abstract TransaccionDao getNewTransaccionDao();
-
-    public abstract UsuarioDao getNewUsuarioDao();
     
     private String getDbEngine() {
         return dbEngine;

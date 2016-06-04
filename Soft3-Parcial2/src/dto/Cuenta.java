@@ -4,7 +4,6 @@ public class Cuenta {
 
     private int idCuenta;
     private double saldo;
-    private int idUSer;
 
     public Cuenta() {
         ;
@@ -24,14 +23,6 @@ public class Cuenta {
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
-    }
-
-    public int getIdUSer() {
-        return idUSer;
-    }
-
-    public void setIdUSer(int idUSer) {
-        this.idUSer = idUSer;
     }
 
 }

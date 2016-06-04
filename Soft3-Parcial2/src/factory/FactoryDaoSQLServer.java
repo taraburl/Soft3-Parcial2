@@ -34,10 +34,4 @@ public class FactoryDaoSQLServer extends FactoryDao {
     public TransaccionDao getNewTransaccionDao() {
         return new TransaccionDaoSQLServer();
     }
-
-    @Override
-    public UsuarioDao getNewUsuarioDao() {
-        return new UsuarioDaoSQLServer();
-    }
-
 }
