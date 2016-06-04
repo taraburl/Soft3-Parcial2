@@ -4,6 +4,7 @@ public class Cuenta {
 
     private int idCuenta;
     private double saldo;
+    private String nimbreCuenta;
 
     public Cuenta() {
         ;
@@ -23,6 +24,14 @@ public class Cuenta {
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
+    }
+
+    public String getNimbreCuenta() {
+        return nimbreCuenta;
+    }
+
+    public void setNimbreCuenta(String nimbreCuenta) {
+        this.nimbreCuenta = nimbreCuenta;
     }
 
 }
