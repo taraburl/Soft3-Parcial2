@@ -1,23 +1,26 @@
 package gui;
 
+import dao.TransaccionDao;
+import dto.Transaccion;
+import factory.FactoryDao;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import org.apache.log4j.LogManager;
 
-public class Transaccion extends javax.swing.JFrame {
+public class TransaccionGUI extends javax.swing.JFrame {
 
     private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
     private int idCategoria;
     private int idCuenta;
 
-    public Transaccion() {
+    public TransaccionGUI() {
         initComponents();
         this.setLocationRelativeTo(this);
         idCategoria = 0;
         idCuenta = 0;
         obtenerfechaHoraActual();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -64,7 +67,7 @@ public class Transaccion extends javax.swing.JFrame {
             .addGap(0, 74, Short.MAX_VALUE)
         );
 
-        pnRealizarTransaccion.setBorder(javax.swing.BorderFactory.createTitledBorder("REALIZAR TRANSACCION"));
+        pnRealizarTransaccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REALIZAR TRANSACCION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
         lbTipoTransaccion.setText("TIPO DE TRANSACCION:");
 
@@ -95,6 +98,11 @@ public class Transaccion extends javax.swing.JFrame {
 
         btnRealizarTransaccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_transaccion.png"))); // NOI18N
         btnRealizarTransaccion.setText("REALIZAR TRANSACCION");
+        btnRealizarTransaccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizarTransaccionActionPerformed(evt);
+            }
+        });
 
         dcFecha.setDateFormatString("dd/MM/yyyy");
 
@@ -180,7 +188,7 @@ public class Transaccion extends javax.swing.JFrame {
                     .addComponent(dcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                         .addComponent(lbHora)
                         .addGap(32, 32, 32))
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
@@ -226,6 +234,28 @@ public class Transaccion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMontoKeyTyped
 
+    private void btnRealizarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarTransaccionActionPerformed
+        try {
+            TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
+
+            Transaccion obj = new Transaccion();
+            obj.setDescripcion(txtDescripcion.getText());
+            obj.setFecha(obtenerFechaSeleccionada());
+            obj.setHora(obtenerHoraSeleccionada());
+            obj.setIdCategoria(1);
+            obj.setIdCuenta(1);
+            obj.setMonto(Double.parseDouble(txtMonto.getText()));
+            obj.setTipo(cbTipoTransaccion.getSelectedItem().toString());
+            int id = objDao.insert(obj);
+            obj = objDao.get(id);
+
+            JOptionPane.showMessageDialog(this, "Transaccion realizada con exito", "MENSAJE", JOptionPane.YES_OPTION);
+        } catch (Exception ex) {
+            System.out.println("Error al insertar " + ex.toString());
+            JOptionPane.showMessageDialog(this, "No se pudo realizar la transaccion ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRealizarTransaccionActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -235,12 +265,12 @@ public class Transaccion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Transaccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransaccionGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Transaccion().setVisible(true);
+                new TransaccionGUI().setVisible(true);
             }
         });
     }
@@ -274,5 +304,50 @@ public class Transaccion extends javax.swing.JFrame {
         Date date = new Date(cal.get(cal.YEAR), cal.get(cal.MONTH), cal.get(cal.DATE), cal.get(cal.HOUR_OF_DAY), cal.get(cal.MINUTE), cal.get(cal.SECOND));
         dcFecha.setDate(date);
         tcHora.setTime(date);
+    }
+
+    private String obtenerFechaSeleccionada() {
+        String mes0 = "";
+        String dia0 = "";
+        int year = dcFecha.getCalendar().get(Calendar.YEAR);
+        int mes = dcFecha.getCalendar().get(Calendar.MONTH) + 1;
+        int dia = dcFecha.getCalendar().get(Calendar.DAY_OF_MONTH);
+        if (mes < 10) {
+            mes0 = "/0" + mes;
+        } else {
+            mes0 = "/" + mes;
+        }
+        if (dia < 10) {
+            dia0 = "/0" + dia;
+        } else {
+            dia0 = "/" + dia;
+        }
+        return year + mes0 + dia0;
+    }
+    
+    private String obtenerHoraSeleccionada(){
+        String hora0 = "";
+        String minutos0 = "";
+        String segundos0 = "";
+        int hora = tcHora.getHours();
+        int minutos = tcHora.getMinutes();
+        int segundos = tcHora.getMinutes();
+        if (hora < 10) {
+            hora0 = "0" + hora + ":";
+        } else {
+            hora0 = hora + ":";
+        }
+        if (minutos < 10) {
+            minutos0 = "0" + minutos + ":";
+        } else {
+            minutos0 = minutos + ":";
+        }
+        if (segundos < 10) {
+            segundos0 = "0" + segundos + ":";
+        } else {
+            segundos0 = segundos + "";
+        }
+        return hora0 + minutos0 + segundos0;
+
     }
 }

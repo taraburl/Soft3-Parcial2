@@ -1,5 +1,7 @@
 package dto;
 
+import java.util.Date;
+
 public class Transaccion {
 
     private int idTransaccion;
@@ -8,7 +10,8 @@ public class Transaccion {
     private int idCategoria;
     private String descripcion;
     private double monto;
-    private String fechaHora;
+    private String fecha;
+    private String Hora;
 
     public Transaccion() {
         ;
@@ -54,12 +57,20 @@ public class Transaccion {
         this.monto = monto;
     }
 
-    public String getFechaHora() {
-        return fechaHora;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setFechaHora(String fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return Hora;
+    }
+
+    public void setHora(String Hora) {
+        this.Hora = Hora;
     }
 
     public String getDescripcion() {
@@ -69,7 +80,5 @@ public class Transaccion {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
 
 }

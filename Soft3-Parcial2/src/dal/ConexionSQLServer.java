@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class ConexionSQLServer extends Conexion {
 
     public static Conexion getOrCreate() {
@@ -34,16 +33,20 @@ public class ConexionSQLServer extends Conexion {
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
             } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                System.out.println("Class not Found Exception: " + e.toString());
             }
             try {
-                String sUrl = "jdbc:sqlserver://" + this.host + ":"+ this.port+";" + 
-                        "database= " + this.dataBase + ";";
+                String sUrl = "jdbc:sqlserver:" + this.host + ":" + this.port + ";"
+                        + "databaseName= " + this.dataBase + ";";
                 System.out.println(sUrl);
                 objConnection = DriverManager.getConnection(sUrl, userName, password);
+                if (objConnection != null) {
+                    System.out.println("Conexión a base de datos " + this.dataBase + " : OK");
+                }
             } catch (SQLException e) {
+                System.out.println("SQL Exception: " + e.toString());
             }
         }
-
     }
 
     @Override
@@ -81,6 +84,7 @@ public class ConexionSQLServer extends Conexion {
         try {
             Statement stmt = objConnection.createStatement();
             ResultSet res = stmt.executeQuery(query);
+            stmt.getMoreResults();
             return res;
         } catch (SQLException e) {
             return null;
@@ -119,6 +123,7 @@ public class ConexionSQLServer extends Conexion {
         try {
             Statement stmt = objConnection.createStatement();
             stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.getMoreResults();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
             return rs.getInt(1);
