@@ -30,8 +30,7 @@ public class Configuracion {
             this.dbName = dbConfig.getChild("db-name").getText();
             this.dbUser = dbConfig.getChild("db-user").getText();
             this.dbPassword = dbConfig.getChild("db-password").getText();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JDOMException | IOException e) {
         }
     }
 

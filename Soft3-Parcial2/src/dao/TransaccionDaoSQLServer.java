@@ -2,8 +2,6 @@ package dao;
 
 import dal.Conexion;
 import dto.Transaccion;
-import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,16 +11,15 @@ import java.util.logging.Logger;
 public class TransaccionDaoSQLServer extends TransaccionDao {
 
     public TransaccionDaoSQLServer() {
-        ;
     }
 
     @Override
     public int insert(Transaccion obj) throws Exception {
         Conexion objConexion = Conexion.getOrCreate();
-        Connection conection = (Connection) objConexion.getOrCreate();
 
         int id = 0;
-        PreparedStatement ps = conection.prepareStatement("EXEC spInsertTransaccion  ?,?,?,?,?,?");
+
+        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spInsertTransaccion  ?,?,?,?,?,?,?");
         ps.setString(1, obj.getTipo());
         ps.setString(2, obj.getDescripcion());
         ps.setDouble(3, obj.getMonto());
@@ -31,9 +28,11 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
         ps.setInt(6, obj.getIdCategoria());
         ps.setInt(7, obj.getIdCuenta());
         id = objConexion.ejecutarInsert(ps.toString());
+
         if (id == 0) {
             throw new Exception("El registro no pudo ser insertado");
         }
+
         objConexion.desconectar();
         return id;
     }
@@ -41,9 +40,8 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
     @Override
     public void update(Transaccion obj) throws Exception {
         Conexion objConexion = Conexion.getOrCreate();
-        Connection conection = (Connection) objConexion.getOrCreate();
 
-        PreparedStatement ps = conection.prepareStatement("EXEC spUpdateTransaccion ?, ?,?,?,?,?,?");
+        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spUpdateTransaccion ?, ?,?,?,?,?,?");
         ps.setInt(1, obj.getIdTransaccion());
         ps.setString(2, obj.getTipo());
         ps.setString(3, obj.getDescripcion());
@@ -63,8 +61,7 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
     public void delete(int id) {
         try {
             Conexion objConexion = Conexion.getOrCreate();
-            Connection conection = (Connection) objConexion.getOrCreate();
-            PreparedStatement ps = conection.prepareStatement("EXEC spDeleteTransaccion ?");
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spDeleteTransaccion ?");
             ps.setInt(1, id);
             objConexion.ejecutarSimple(ps.toString());
             objConexion.desconectar();

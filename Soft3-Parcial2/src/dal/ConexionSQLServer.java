@@ -84,7 +84,6 @@ public class ConexionSQLServer extends Conexion {
         try {
             Statement stmt = objConnection.createStatement();
             ResultSet res = stmt.executeQuery(query);
-            stmt.getMoreResults();
             return res;
         } catch (SQLException e) {
             return null;
@@ -123,11 +122,11 @@ public class ConexionSQLServer extends Conexion {
         try {
             Statement stmt = objConnection.createStatement();
             stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-            stmt.getMoreResults();
             ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
+            rs.next();   
             return rs.getInt(1);
         } catch (SQLException e) {
+            System.out.println("Error al ejecutar el metodo ejecutarInsert() " + e.toString());
             return 0;
         }
     }

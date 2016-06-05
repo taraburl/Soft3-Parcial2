@@ -246,12 +246,12 @@ public class TransaccionGUI extends javax.swing.JFrame {
             obj.setIdCuenta(1);
             obj.setMonto(Double.parseDouble(txtMonto.getText()));
             obj.setTipo(cbTipoTransaccion.getSelectedItem().toString());
+            
             int id = objDao.insert(obj);
             obj = objDao.get(id);
 
             JOptionPane.showMessageDialog(this, "Transaccion realizada con exito", "MENSAJE", JOptionPane.YES_OPTION);
         } catch (Exception ex) {
-            System.out.println("Error al insertar " + ex.toString());
             JOptionPane.showMessageDialog(this, "No se pudo realizar la transaccion ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnRealizarTransaccionActionPerformed

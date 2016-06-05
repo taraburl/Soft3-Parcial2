@@ -2,10 +2,6 @@ package dal;
 
 import java.sql.ResultSet;
 
-/**
- *
- * @author Jose Carlos Gutierrez
- */
 public interface IConexion {
 
     /**

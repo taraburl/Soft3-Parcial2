@@ -2,9 +2,7 @@ package dal;
 
 import java.sql.Connection;
 
-
 public abstract class Conexion implements IConexion {
-
 
     protected String host;
     protected String dataBase;
@@ -15,46 +13,56 @@ public abstract class Conexion implements IConexion {
     protected Connection objConnection;
     protected static Conexion objSingleton;
 
-    
     public static Conexion getOrCreate() {
         if (objSingleton == null) {
             Configuracion config = Configuracion.getConfiguracion();
-             if (config.getDbEngine().equals("SQLServer")) {
-             objSingleton = ConexionSQLServer.getOrCreate();
-             }
+            if (config.getDbEngine().equals("SQLServer")) {
+                objSingleton = ConexionSQLServer.getOrCreate();
+            }
 
         }
         objSingleton.conectar();
         return objSingleton;
     }
 
-    
     public String getDataBase() {
         return dataBase;
     }
 
-    
     public String getHost() {
         return host;
     }
 
-   
     public String getInstance() {
         return instance;
     }
 
-   
     public String getPassword() {
         return password;
     }
 
-   
     public String getPort() {
         return port;
     }
 
-   
     public String getUsername() {
         return userName;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Connection getObjConnection() {
+        return objConnection;
+    }
+
+    public void setObjConnection(Connection objConnection) {
+        this.objConnection = objConnection;
+    }
+
 }
