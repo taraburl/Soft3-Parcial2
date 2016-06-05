@@ -4,7 +4,7 @@ public class Cuenta {
 
     private int idCuenta;
     private double saldo;
-    private String nimbreCuenta;
+    private String nombreCuenta;
 
     public Cuenta() {
         ;
@@ -26,12 +26,12 @@ public class Cuenta {
         this.saldo = saldo;
     }
 
-    public String getNimbreCuenta() {
-        return nimbreCuenta;
+    public String getNombreCuenta() {
+        return nombreCuenta;
     }
 
-    public void setNimbreCuenta(String nimbreCuenta) {
-        this.nimbreCuenta = nimbreCuenta;
+    public void setNombreCuenta(String nombreCuenta) {
+        this.nombreCuenta = nombreCuenta;
     }
 
 }
