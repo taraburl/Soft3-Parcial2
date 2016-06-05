@@ -1,37 +1,21 @@
 package gui;
 
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.ImageIcon;
-import org.apache.log4j.LogManager;
+public class EditarTransaccion extends javax.swing.JFrame {
 
-public class Transaccion extends javax.swing.JFrame {
-
-    private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
-    private int idCategoria;
-    private int idCuenta;
-
-    public Transaccion() {
+    public EditarTransaccion() {
         initComponents();
         this.setLocationRelativeTo(this);
-        idCategoria = 0;
-        idCuenta = 0;
-        obtenerfechaHoraActual();
-
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTimeChooserDemo1 = new lu.tudor.santec.jtimechooser.demo.JTimeChooserDemo();
-        pnCuentas = new javax.swing.JPanel();
         pnRealizarTransaccion = new javax.swing.JPanel();
         lbTipoTransaccion = new javax.swing.JLabel();
         cbTipoTransaccion = new javax.swing.JComboBox<>();
         lbDescripcion = new javax.swing.JLabel();
         lbCuenta = new javax.swing.JLabel();
-        cbCuenta = new javax.swing.JComboBox<>();
         lbCategoria = new javax.swing.JLabel();
         cbCategoria = new javax.swing.JComboBox<>();
         btnAddCategoria = new javax.swing.JButton();
@@ -40,29 +24,17 @@ public class Transaccion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
-        btnRealizarTransaccion = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         dcFecha = new com.toedter.calendar.JDateChooser();
         lbFecha = new javax.swing.JLabel();
         lbHora = new javax.swing.JLabel();
         tcHora = new lu.tudor.santec.jtimechooser.JTimeChooser();
+        btnCancelar = new javax.swing.JButton();
+        txtNroCuenta = new javax.swing.JTextField();
+        pnCuentas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TRANSACCIONES");
-        setIconImage(new ImageIcon("transaccion.png").getImage());
-        setResizable(false);
-
-        pnCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder("CUENTAS"));
-
-        javax.swing.GroupLayout pnCuentasLayout = new javax.swing.GroupLayout(pnCuentas);
-        pnCuentas.setLayout(pnCuentasLayout);
-        pnCuentasLayout.setHorizontalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnCuentasLayout.setVerticalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 74, Short.MAX_VALUE)
-        );
+        setTitle("TRANSACCION");
 
         pnRealizarTransaccion.setBorder(javax.swing.BorderFactory.createTitledBorder("REALIZAR TRANSACCION"));
 
@@ -72,7 +44,7 @@ public class Transaccion extends javax.swing.JFrame {
 
         lbDescripcion.setText("DESCRIPCION:");
 
-        lbCuenta.setText("SELECCIONAR CUENTA:");
+        lbCuenta.setText("NRO. DE CUENTA:");
 
         lbCategoria.setText("CATEGORIA:");
 
@@ -93,8 +65,8 @@ public class Transaccion extends javax.swing.JFrame {
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
-        btnRealizarTransaccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon_transaccion.png"))); // NOI18N
-        btnRealizarTransaccion.setText("REALIZAR TRANSACCION");
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png"))); // NOI18N
+        btnGuardar.setText("GUARDAR");
 
         dcFecha.setDateFormatString("dd/MM/yyyy");
 
@@ -103,6 +75,16 @@ public class Transaccion extends javax.swing.JFrame {
         lbHora.setText("HORA:");
 
         tcHora.setToolTipText("");
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar.png"))); // NOI18N
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        txtNroCuenta.setEditable(false);
 
         javax.swing.GroupLayout pnRealizarTransaccionLayout = new javax.swing.GroupLayout(pnRealizarTransaccion);
         pnRealizarTransaccion.setLayout(pnRealizarTransaccionLayout);
@@ -115,15 +97,12 @@ public class Transaccion extends javax.swing.JFrame {
                         .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
                                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
-                                        .addComponent(lbTipoTransaccion)
-                                        .addGap(26, 26, 26))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRealizarTransaccionLayout.createSequentialGroup()
-                                        .addComponent(lbCuenta)
-                                        .addGap(30, 30, 30)))
-                                .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbTipoTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lbTipoTransaccion)
+                                    .addComponent(lbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbTipoTransaccion, 0, 143, Short.MAX_VALUE)
+                                    .addComponent(txtNroCuenta)))
                             .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
                                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,7 +119,7 @@ public class Transaccion extends javax.swing.JFrame {
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(tcHora, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(293, Short.MAX_VALUE))
+                        .addContainerGap(392, Short.MAX_VALUE))
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
                         .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -150,8 +129,11 @@ public class Transaccion extends javax.swing.JFrame {
                             .addComponent(lbDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                         .addGap(26, 26, 26)
                         .addComponent(jScrollPane1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnRealizarTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12))))
         );
         pnRealizarTransaccionLayout.setVerticalGroup(
             pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +141,7 @@ public class Transaccion extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbTipoTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,18 +162,35 @@ public class Transaccion extends javax.swing.JFrame {
                     .addComponent(dcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addGap(18, 26, Short.MAX_VALUE)
                         .addComponent(lbHora)
                         .addGap(32, 32, 32))
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(26, 26, 26)
                         .addComponent(tcHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRealizarTransaccion, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnRealizarTransaccionLayout.createSequentialGroup()
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+        );
+
+        pnCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder("CUENTAS"));
+
+        javax.swing.GroupLayout pnCuentasLayout = new javax.swing.GroupLayout(pnCuentas);
+        pnCuentas.setLayout(pnCuentasLayout);
+        pnCuentasLayout.setHorizontalGroup(
+            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnCuentasLayout.setVerticalGroup(
+            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 74, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -218,6 +217,12 @@ public class Transaccion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        ListaTransacciones list = new ListaTransacciones();
+        list.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
@@ -226,35 +231,16 @@ public class Transaccion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMontoKeyTyped
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Transaccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Transaccion().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCategoria;
-    private javax.swing.JButton btnRealizarTransaccion;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cbCategoria;
-    private javax.swing.JComboBox<String> cbCuenta;
     private javax.swing.JComboBox<String> cbTipoTransaccion;
     private com.toedter.calendar.JDateChooser dcFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private lu.tudor.santec.jtimechooser.demo.JTimeChooserDemo jTimeChooserDemo1;
     private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbCuenta;
     private javax.swing.JLabel lbDescripcion;
@@ -267,12 +253,6 @@ public class Transaccion extends javax.swing.JFrame {
     private lu.tudor.santec.jtimechooser.JTimeChooser tcHora;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtNroCuenta;
     // End of variables declaration//GEN-END:variables
-
-    private void obtenerfechaHoraActual() {
-        Calendar cal = Calendar.getInstance();
-        Date date = new Date(cal.get(cal.YEAR), cal.get(cal.MONTH), cal.get(cal.DATE), cal.get(cal.HOUR_OF_DAY), cal.get(cal.MINUTE), cal.get(cal.SECOND));
-        dcFecha.setDate(date);
-        tcHora.setTime(date);
-    }
 }
