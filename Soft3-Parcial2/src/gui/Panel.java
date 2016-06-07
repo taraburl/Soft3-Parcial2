@@ -7,6 +7,7 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,7 +22,9 @@ public class Panel extends javax.swing.JPanel {
         initComponents();
 
         this.imagen = imagen;
-        this.setSize(1600, 800);
+        Toolkit t = Toolkit.getDefaultToolkit();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize.width, screenSize.height);
     }
 
     @Override
