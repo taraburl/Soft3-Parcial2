@@ -36,9 +36,9 @@ public class ConexionSQLServer extends Conexion {
                 System.out.println("Class not Found Exception: " + e.toString());
             }
             try {
-                String sUrl = "jdbc:sqlserver:" + this.host + ":" + this.port + ";"
+                String sUrl = "jdbc:sqlserver://" + this.host + ":" + this.port + ";"
                         + "databaseName= " + this.dataBase + ";";
-                System.out.println(sUrl);
+                System.out.println("URL Conexion: " + sUrl);
                 objConnection = DriverManager.getConnection(sUrl, userName, password);
                 if (objConnection != null) {
                     System.out.println("Conexión a base de datos " + this.dataBase + " : OK");
