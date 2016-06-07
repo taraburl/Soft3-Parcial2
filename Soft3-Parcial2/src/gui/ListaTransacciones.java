@@ -1,13 +1,25 @@
 package gui;
 
+import dao.TransaccionDao;
+import dto.Transaccion;
+import factory.FactoryDao;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.apache.log4j.LogManager;
 
 public class ListaTransacciones extends javax.swing.JFrame {
+
+    private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
+    private DefaultTableModel dtmTransacciones;
+    private int idTransaccion;
 
     public ListaTransacciones() {
         initComponents();
         this.setLocationRelativeTo(this);
+        tableModel();
+        idTransaccion = 1;
     }
 
     @SuppressWarnings("unchecked")
@@ -64,9 +76,19 @@ public class ListaTransacciones extends javax.swing.JFrame {
 
         btnMostar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mostrar.png"))); // NOI18N
         btnMostar.setText("MOSTRAR");
+        btnMostar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostarActionPerformed(evt);
+            }
+        });
 
         btnMostrarTodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mostrarTodo.png"))); // NOI18N
         btnMostrarTodo.setText("MOSTRAR TODAS LAS TRANSACCIONES");
+        btnMostrarTodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarTodoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png"))); // NOI18N
         btnEditar.setText("EDITAR");
@@ -163,11 +185,16 @@ public class ListaTransacciones extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea editar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
+<<<<<<< HEAD
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     new EditaTransferencia().setVisible(true);
                 }
             });
+=======
+            EditarTransaccion edit = new EditarTransaccion(0);
+            edit.setVisible(true);
+>>>>>>> Implementacion de metodos en la interfaz Transaccion
             this.dispose();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -177,8 +204,17 @@ public class ListaTransacciones extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea eliminar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
+            eleiminar(1);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnMostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostarActionPerformed
+        cargarTransaccionesById(idTransaccion);
+    }//GEN-LAST:event_btnMostarActionPerformed
+
+    private void btnMostrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarTodoActionPerformed
+        cargarTodasTransacciones();
+    }//GEN-LAST:event_btnMostrarTodoActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -214,4 +250,40 @@ public class ListaTransacciones extends javax.swing.JFrame {
     private javax.swing.JPanel pnTransacciones;
     private javax.swing.JTable tblTransacciones;
     // End of variables declaration//GEN-END:variables
+
+    private void tableModel() {
+        dtmTransacciones = new DefaultTableModel();
+        dtmTransacciones.addColumn("ID");
+        dtmTransacciones.addColumn("Tipo");
+        dtmTransacciones.addColumn("Categoria");
+        dtmTransacciones.addColumn("Descripcion");
+        dtmTransacciones.addColumn("ID Cuenta");
+        dtmTransacciones.addColumn("Monto Bs.");
+        dtmTransacciones.addColumn("Fecha");
+        dtmTransacciones.addColumn("Hora");
+        tblTransacciones.setModel(dtmTransacciones);
+    }
+
+    private void cargarTodasTransacciones() {
+        TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
+        ArrayList<Transaccion> listCagtegorias = objDao.getList();
+        for (Transaccion listCagtegoria : listCagtegorias) {
+            Object datos[] = {listCagtegoria.getIdTransaccion(), listCagtegoria.getTipo(), listCagtegoria.getIdCategoria(), listCagtegoria.getDescripcion(), listCagtegoria.getIdCuenta(), listCagtegoria.getMonto(), listCagtegoria.getFecha(), listCagtegoria.getHora()};
+            dtmTransacciones.addRow(datos);
+        }
+    }
+
+    private void cargarTransaccionesById(int id) {
+        TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
+        Transaccion transaccion = objDao.get(id);
+        if (transaccion != null) {
+            Object datos[] = {transaccion.getIdTransaccion(), transaccion.getTipo(), transaccion.getIdCategoria(), transaccion.getDescripcion(), transaccion.getIdCuenta(), transaccion.getMonto(), transaccion.getFecha(), transaccion.getHora()};
+            dtmTransacciones.addRow(datos);
+        }
+    }
+
+    private void eleiminar(int id) {
+        TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
+        objDao.delete(id);
+    }
 }

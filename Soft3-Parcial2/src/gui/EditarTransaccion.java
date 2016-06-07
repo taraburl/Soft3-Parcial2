@@ -1,8 +1,12 @@
 package gui;
 
+import org.apache.log4j.LogManager;
+
 public class EditarTransaccion extends javax.swing.JFrame {
 
-    public EditarTransaccion() {
+    private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
+
+    public EditarTransaccion(int id) {
         initComponents();
         this.setLocationRelativeTo(this);
     }

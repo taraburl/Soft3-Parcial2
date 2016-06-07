@@ -185,6 +185,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="MOSTRAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnMostrarTodo">
           <Properties>
@@ -193,6 +196,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="MOSTRAR TODAS LAS TRANSACCIONES"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarTodoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
