@@ -34,12 +34,12 @@ public class TransaccionGUI extends javax.swing.JFrame {
         pnCuentas = new javax.swing.JPanel();
         pnRealizarTransaccion = new javax.swing.JPanel();
         lbTipoTransaccion = new javax.swing.JLabel();
-        cbTipoTransaccion = new javax.swing.JComboBox<>();
+        cbTipoTransaccion = new javax.swing.JComboBox<String>();
         lbDescripcion = new javax.swing.JLabel();
         lbCuenta = new javax.swing.JLabel();
-        cbCuenta = new javax.swing.JComboBox<>();
+        cbCuenta = new javax.swing.JComboBox<String>();
         lbCategoria = new javax.swing.JLabel();
-        cbCategoria = new javax.swing.JComboBox<>();
+        cbCategoria = new javax.swing.JComboBox<String>();
         btnAddCategoria = new javax.swing.JButton();
         lbMonto = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
@@ -52,7 +52,6 @@ public class TransaccionGUI extends javax.swing.JFrame {
         lbHora = new javax.swing.JLabel();
         tcHora = new lu.tudor.santec.jtimechooser.JTimeChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TRANSACCIONES");
         setIconImage(new ImageIcon("transaccion.png").getImage());
         setResizable(false);
@@ -74,7 +73,7 @@ public class TransaccionGUI extends javax.swing.JFrame {
 
         lbTipoTransaccion.setText("TIPO DE TRANSACCION:");
 
-        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto" }));
+        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingreso", "Gasto" }));
         cbTipoTransaccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoTransaccionActionPerformed(evt);
