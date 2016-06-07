@@ -13,11 +13,11 @@ public class EditarTransaccion extends javax.swing.JFrame {
 
         pnRealizarTransaccion = new javax.swing.JPanel();
         lbTipoTransaccion = new javax.swing.JLabel();
-        cbTipoTransaccion = new javax.swing.JComboBox<>();
+        cbTipoTransaccion = new javax.swing.JComboBox<String>();
         lbDescripcion = new javax.swing.JLabel();
         lbCuenta = new javax.swing.JLabel();
         lbCategoria = new javax.swing.JLabel();
-        cbCategoria = new javax.swing.JComboBox<>();
+        cbCategoria = new javax.swing.JComboBox<String>();
         btnAddCategoria = new javax.swing.JButton();
         lbMonto = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
@@ -33,14 +33,13 @@ public class EditarTransaccion extends javax.swing.JFrame {
         txtNroCuenta = new javax.swing.JTextField();
         pnCuentas = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TRANSACCION");
 
         pnRealizarTransaccion.setBorder(javax.swing.BorderFactory.createTitledBorder("REALIZAR TRANSACCION"));
 
         lbTipoTransaccion.setText("TIPO DE TRANSACCION:");
 
-        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto" }));
+        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingreso", "Gasto" }));
 
         lbDescripcion.setText("DESCRIPCION:");
 

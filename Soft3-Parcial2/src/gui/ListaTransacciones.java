@@ -18,7 +18,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         pnCuentas = new javax.swing.JPanel();
         pnTransacciones = new javax.swing.JPanel();
         lbCuenta = new javax.swing.JLabel();
-        cbCuenta = new javax.swing.JComboBox<>();
+        cbCuenta = new javax.swing.JComboBox<String>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTransacciones = new javax.swing.JTable();
         btnMostar = new javax.swing.JButton();
@@ -28,7 +28,6 @@ public class ListaTransacciones extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TRANSACCIONES");
         setIconImage(new ImageIcon("transaccion.png").getImage());
         setResizable(false);
@@ -164,8 +163,11 @@ public class ListaTransacciones extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea editar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
-            EditarTransaccion edit = new EditarTransaccion();
-            edit.setVisible(true);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new EditaTransferencia().setVisible(true);
+                }
+            });
             this.dispose();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
