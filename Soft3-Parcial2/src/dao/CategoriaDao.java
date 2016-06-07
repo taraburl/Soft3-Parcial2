@@ -14,4 +14,6 @@ public abstract class CategoriaDao {
     public abstract ArrayList<Categoria> getList();
 
     public abstract Categoria get(int id);
+    
+    public abstract ArrayList<Categoria> getListByTipo(String tipo); 
 }

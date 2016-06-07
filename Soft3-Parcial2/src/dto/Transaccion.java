@@ -1,7 +1,5 @@
 package dto;
 
-import java.util.Date;
-
 public class Transaccion {
 
     private int idTransaccion;

@@ -3,6 +3,7 @@ package dao;
 import dal.Conexion;
 import dto.Transaccion;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -11,6 +12,7 @@ import java.util.logging.Logger;
 public class TransaccionDaoSQLServer extends TransaccionDao {
 
     public TransaccionDaoSQLServer() {
+        ;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
     public void update(Transaccion obj) throws Exception {
         Conexion objConexion = Conexion.getOrCreate();
 
-        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spUpdateTransaccion ?, ?,?,?,?,?,?");
+        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spUpdateTransaccion ?,?,?,?,?,?,?,?");
         ps.setInt(1, obj.getIdTransaccion());
         ps.setString(2, obj.getTipo());
         ps.setString(3, obj.getDescripcion());
@@ -72,12 +74,86 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
 
     @Override
     public ArrayList<Transaccion> getList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Transaccion> transacciones = new ArrayList<>();
+        try {
+            Conexion objConexion = Conexion.getOrCreate();
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spCategoriaPorTipo");
+
+            ResultSet objResultSet = objConexion.ejecutar(ps.toString());
+
+            while (objResultSet.next()) {
+                Transaccion obj = new Transaccion();
+                int _idTransaccion = objResultSet.getInt("idTransaccion");
+                obj.setIdTransaccion(_idTransaccion);
+
+                String _tipo = objResultSet.getString("tipo");
+                obj.setTipo(_tipo);
+
+                String _descripcion = objResultSet.getString("descripcion");
+                obj.setDescripcion(_descripcion);
+
+                Double _monto = objResultSet.getDouble("monto");
+                obj.setMonto(_monto);
+
+                int _idCategoria = objResultSet.getInt("idCategoria");
+                obj.setIdTransaccion(_idCategoria);
+
+                int _idCuenta = objResultSet.getInt("idCuenta");
+                obj.setIdTransaccion(_idCuenta);
+
+                String _fecha = objResultSet.getString("fecha");
+                obj.setFecha(_fecha);
+
+                String _hora = objResultSet.getString("hora");
+                obj.setHora(_hora);
+
+                transacciones.add(obj);
+            }
+        } catch (Exception ex) {
+        }
+        return transacciones;
     }
 
     @Override
     public Transaccion get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Conexion objConexion = Conexion.getOrCreate();
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC sbTransaccionesById ?");
+            ps.setInt(1, id);
+
+            ResultSet objResultSet = objConexion.ejecutar(ps.toString());
+            if (objResultSet.next()) {
+                Transaccion obj = new Transaccion();
+                int _idTransaccion = objResultSet.getInt("idTransaccion");
+                obj.setIdTransaccion(_idTransaccion);
+
+                String _tipo = objResultSet.getString("tipo");
+                obj.setTipo(_tipo);
+
+                String _descripcion = objResultSet.getString("descripcion");
+                obj.setDescripcion(_descripcion);
+
+                Double _monto = objResultSet.getDouble("monto");
+                obj.setMonto(_monto);
+
+                int _idCategoria = objResultSet.getInt("idCategoria");
+                obj.setIdTransaccion(_idCategoria);
+
+                int _idCuenta = objResultSet.getInt("idCuenta");
+                obj.setIdTransaccion(_idCuenta);
+
+                String _fecha = objResultSet.getString("fecha");
+                obj.setFecha(_fecha);
+
+                String _hora = objResultSet.getString("hora");
+                obj.setHora(_hora);
+
+                return obj;
+            }
+        } catch (Exception ex) {
+            ;
+        }
+        return null;
     }
 
 }

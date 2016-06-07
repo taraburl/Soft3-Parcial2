@@ -1,8 +1,11 @@
 package gui;
 
+import dao.CategoriaDao;
 import dao.TransaccionDao;
+import dto.Categoria;
 import dto.Transaccion;
 import factory.FactoryDao;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -21,13 +24,13 @@ public class TransaccionGUI extends javax.swing.JFrame {
         idCategoria = 0;
         idCuenta = 0;
         obtenerfechaHoraActual();
+        obtenerCategoriasByTipo();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTimeChooserDemo1 = new lu.tudor.santec.jtimechooser.demo.JTimeChooserDemo();
         pnCuentas = new javax.swing.JPanel();
         pnRealizarTransaccion = new javax.swing.JPanel();
         lbTipoTransaccion = new javax.swing.JLabel();
@@ -70,7 +73,16 @@ public class TransaccionGUI extends javax.swing.JFrame {
 
         lbTipoTransaccion.setText("TIPO DE TRANSACCION:");
 
+<<<<<<< HEAD
         cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingreso", "Gasto" }));
+=======
+        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto" }));
+        cbTipoTransaccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoTransaccionActionPerformed(evt);
+            }
+        });
+>>>>>>> dd07aefd720acf8d01cc54880351bde8af42da83
 
         lbDescripcion.setText("DESCRIPCION:");
 
@@ -245,7 +257,7 @@ public class TransaccionGUI extends javax.swing.JFrame {
             obj.setIdCuenta(1);
             obj.setMonto(Double.parseDouble(txtMonto.getText()));
             obj.setTipo(cbTipoTransaccion.getSelectedItem().toString());
-            
+
             int id = objDao.insert(obj);
             obj = objDao.get(id);
 
@@ -254,6 +266,10 @@ public class TransaccionGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se pudo realizar la transaccion ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnRealizarTransaccionActionPerformed
+
+    private void cbTipoTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoTransaccionActionPerformed
+        obtenerCategoriasByTipo();
+    }//GEN-LAST:event_cbTipoTransaccionActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -283,7 +299,6 @@ public class TransaccionGUI extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dcFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private lu.tudor.santec.jtimechooser.demo.JTimeChooserDemo jTimeChooserDemo1;
     private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbCuenta;
     private javax.swing.JLabel lbDescripcion;
@@ -323,8 +338,8 @@ public class TransaccionGUI extends javax.swing.JFrame {
         }
         return year + mes0 + dia0;
     }
-    
-    private String obtenerHoraSeleccionada(){
+
+    private String obtenerHoraSeleccionada() {
         String hora0 = "";
         String minutos0 = "";
         String segundos0 = "";
@@ -348,5 +363,14 @@ public class TransaccionGUI extends javax.swing.JFrame {
         }
         return hora0 + minutos0 + segundos0;
 
+    }
+
+    private void obtenerCategoriasByTipo() {
+        CategoriaDao objDao = FactoryDao.getFactoryInstance().getNewCategoriaDao();
+        ArrayList<Categoria> listCagtegorias = objDao.getListByTipo(cbTipoTransaccion.getSelectedItem().toString());
+        this.cbCategoria.removeAllItems();
+        listCagtegorias.stream().forEach((list) -> {
+            this.cbCategoria.addItem(list.getNombre());
+        });
     }
 }
