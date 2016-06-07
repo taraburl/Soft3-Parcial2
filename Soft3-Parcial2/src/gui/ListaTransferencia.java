@@ -2,6 +2,7 @@ package gui;
 
 import Utils.Modelo;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -90,6 +91,7 @@ public class ListaTransferencia extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
 
         setTitle("LISTA TRANFERENCIAS");
+        setIconImage(new ImageIcon("src/images/icono_trans.png").getImage());
         setResizable(false);
 
         jtDetalle.setModel(new javax.swing.table.DefaultTableModel(

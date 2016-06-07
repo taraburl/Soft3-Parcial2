@@ -6,6 +6,7 @@
 package gui;
 
 import java.util.Date;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -67,6 +68,7 @@ public class EditaTransferencia extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setTitle("TRANSFERENCIA");
+        setIconImage(new ImageIcon("src/images/icono_trans.png").getImage());
 
         lbMonto.setText("MONTO A TRANFERIR:");
 

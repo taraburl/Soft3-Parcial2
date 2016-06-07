@@ -69,6 +69,8 @@ public class Transferencia extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setTitle("TRANSFERENCIA");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(new ImageIcon("src/images/icono_trans.png").getImage());
 
         lbMonto.setText("MONTO A TRANFERIR:");
 
