@@ -309,11 +309,11 @@ public class TransaccionGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 
-    private void obtenerfechaHoraActual() {
-        Calendar cal = Calendar.getInstance();
-        Date date = new Date(cal.get(cal.YEAR), cal.get(cal.MONTH), cal.get(cal.DATE), cal.get(cal.HOUR_OF_DAY), cal.get(cal.MINUTE), cal.get(cal.SECOND));
-        dcFecha.setDate(date);
-        tcHora.setTime(date);
+     private void obtenerfechaHoraActual() {
+        java.util.Date fecha = new Date();
+        dcFecha.setDate(fecha);
+        tcHora.setTime(fecha);
+        
     }
 
     private String obtenerFechaSeleccionada() {
