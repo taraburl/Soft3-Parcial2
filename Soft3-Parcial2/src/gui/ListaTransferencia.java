@@ -160,7 +160,7 @@ public class ListaTransferencia extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea editar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
-            EditarTransaccion edit = new EditarTransaccion();
+            EditarTransaccion edit = new EditarTransaccion(1);
             edit.setVisible(true);
             this.dispose();
         }

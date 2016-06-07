@@ -185,16 +185,13 @@ public class ListaTransacciones extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea editar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
-<<<<<<< HEAD
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     new EditaTransferencia().setVisible(true);
                 }
             });
-=======
             EditarTransaccion edit = new EditarTransaccion(0);
             edit.setVisible(true);
->>>>>>> Implementacion de metodos en la interfaz Transaccion
             this.dispose();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
