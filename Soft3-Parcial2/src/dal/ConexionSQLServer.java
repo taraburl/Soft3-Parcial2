@@ -38,7 +38,6 @@ public class ConexionSQLServer extends Conexion {
             try {
                 String sUrl = "jdbc:sqlserver://" + this.host + ":" + this.port + ";"
                         + "databaseName= " + this.dataBase + ";";
-                System.out.println("URL Conexion: " + sUrl);
                 objConnection = DriverManager.getConnection(sUrl, userName, password);
                 if (objConnection != null) {
                     System.out.println("Conexión a base de datos " + this.dataBase + " : OK");
@@ -86,6 +85,7 @@ public class ConexionSQLServer extends Conexion {
             ResultSet res = stmt.executeQuery(query);
             return res;
         } catch (SQLException e) {
+            System.out.println("Error en el metodo ejecutar(): " + e.toString());
             return null;
         }
     }
@@ -113,6 +113,7 @@ public class ConexionSQLServer extends Conexion {
             int nb = stmt.executeUpdate(query);
             return nb;
         } catch (SQLException e) {
+            System.out.println("Error en ejecutarSimple(): " + e.toString());
             return 0;
         }
     }
