@@ -91,6 +91,7 @@ public class ListaTransferencia extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
 
         setTitle("LISTA TRANFERENCIAS");
+        setFocusCycleRoot(false);
         setIconImage(new ImageIcon("src/images/icono_trans.png").getImage());
         setResizable(false);
 
