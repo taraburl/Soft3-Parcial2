@@ -17,11 +17,11 @@ public class EditarTransaccion extends javax.swing.JFrame {
 
         pnRealizarTransaccion = new javax.swing.JPanel();
         lbTipoTransaccion = new javax.swing.JLabel();
-        cbTipoTransaccion = new javax.swing.JComboBox<String>();
+        cbTipoTransaccion = new javax.swing.JComboBox<>();
         lbDescripcion = new javax.swing.JLabel();
         lbCuenta = new javax.swing.JLabel();
         lbCategoria = new javax.swing.JLabel();
-        cbCategoria = new javax.swing.JComboBox<String>();
+        cbCategoria = new javax.swing.JComboBox<>();
         btnAddCategoria = new javax.swing.JButton();
         lbMonto = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
@@ -35,7 +35,6 @@ public class EditarTransaccion extends javax.swing.JFrame {
         tcHora = new lu.tudor.santec.jtimechooser.JTimeChooser();
         btnCancelar = new javax.swing.JButton();
         txtNroCuenta = new javax.swing.JTextField();
-        pnCuentas = new javax.swing.JPanel();
 
         setTitle("TRANSACCION");
 
@@ -43,7 +42,7 @@ public class EditarTransaccion extends javax.swing.JFrame {
 
         lbTipoTransaccion.setText("TIPO DE TRANSACCION:");
 
-        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingreso", "Gasto" }));
+        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto" }));
 
         lbDescripcion.setText("DESCRIPCION:");
 
@@ -183,28 +182,13 @@ public class EditarTransaccion extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pnCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder("CUENTAS"));
-
-        javax.swing.GroupLayout pnCuentasLayout = new javax.swing.GroupLayout(pnCuentas);
-        pnCuentas.setLayout(pnCuentasLayout);
-        pnCuentasLayout.setHorizontalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnCuentasLayout.setVerticalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 74, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnRealizarTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnRealizarTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -212,8 +196,6 @@ public class EditarTransaccion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnRealizarTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -251,7 +233,6 @@ public class EditarTransaccion extends javax.swing.JFrame {
     private javax.swing.JLabel lbHora;
     private javax.swing.JLabel lbMonto;
     private javax.swing.JLabel lbTipoTransaccion;
-    private javax.swing.JPanel pnCuentas;
     private javax.swing.JPanel pnRealizarTransaccion;
     private lu.tudor.santec.jtimechooser.JTimeChooser tcHora;
     private javax.swing.JTextArea txtDescripcion;

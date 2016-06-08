@@ -12,34 +12,43 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.log4j.LogManager;
 
-public class TransaccionGUI extends javax.swing.JFrame {
+public class Transacciones extends javax.swing.JFrame {
 
     private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
     private int idCategoria;
     private int idCuenta;
 
-    public TransaccionGUI() {
+    public Transacciones() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Transacciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         initComponents();
         this.setLocationRelativeTo(this);
         idCategoria = 0;
         idCuenta = 0;
         obtenerfechaHoraActual();
-        obtenerCategoriasByTipo();
+        obtenerCategoriasByTipo(cbTipoTransaccion.getSelectedItem().toString());
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnCuentas = new javax.swing.JPanel();
         pnRealizarTransaccion = new javax.swing.JPanel();
         lbTipoTransaccion = new javax.swing.JLabel();
-        cbTipoTransaccion = new javax.swing.JComboBox<String>();
+        cbTipoTransaccion = new javax.swing.JComboBox<>();
         lbDescripcion = new javax.swing.JLabel();
         lbCuenta = new javax.swing.JLabel();
-        cbCuenta = new javax.swing.JComboBox<String>();
+        cbCuenta = new javax.swing.JComboBox<>();
         lbCategoria = new javax.swing.JLabel();
-        cbCategoria = new javax.swing.JComboBox<String>();
+        cbCategoria = new javax.swing.JComboBox<>();
         btnAddCategoria = new javax.swing.JButton();
         lbMonto = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
@@ -56,24 +65,11 @@ public class TransaccionGUI extends javax.swing.JFrame {
         setIconImage(new ImageIcon("transaccion.png").getImage());
         setResizable(false);
 
-        pnCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder("CUENTAS"));
-
-        javax.swing.GroupLayout pnCuentasLayout = new javax.swing.GroupLayout(pnCuentas);
-        pnCuentas.setLayout(pnCuentasLayout);
-        pnCuentasLayout.setHorizontalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnCuentasLayout.setVerticalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 74, Short.MAX_VALUE)
-        );
-
         pnRealizarTransaccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REALIZAR TRANSACCION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
         lbTipoTransaccion.setText("TIPO DE TRANSACCION:");
 
-        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ingreso", "Gasto" }));
+        cbTipoTransaccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto" }));
         cbTipoTransaccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoTransaccionActionPerformed(evt);
@@ -215,9 +211,7 @@ public class TransaccionGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnRealizarTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnRealizarTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -225,8 +219,6 @@ public class TransaccionGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnRealizarTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -257,34 +249,16 @@ public class TransaccionGUI extends javax.swing.JFrame {
             int id = objDao.insert(obj);
             obj = objDao.get(id);
 
-            JOptionPane.showMessageDialog(this, "Transaccion realizada con exito", "MENSAJE", JOptionPane.YES_OPTION);
+            JOptionPane.showMessageDialog(this, "Transaccion realizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
+            logger.error("Error al insertar Transaccion: " + ex.toString());
             JOptionPane.showMessageDialog(this, "No se pudo realizar la transaccion ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnRealizarTransaccionActionPerformed
 
     private void cbTipoTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoTransaccionActionPerformed
-        obtenerCategoriasByTipo();
+        obtenerCategoriasByTipo(cbTipoTransaccion.getSelectedItem().toString());
     }//GEN-LAST:event_cbTipoTransaccionActionPerformed
-
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TransaccionGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TransaccionGUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCategoria;
@@ -302,18 +276,16 @@ public class TransaccionGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lbHora;
     private javax.swing.JLabel lbMonto;
     private javax.swing.JLabel lbTipoTransaccion;
-    private javax.swing.JPanel pnCuentas;
     private javax.swing.JPanel pnRealizarTransaccion;
     private lu.tudor.santec.jtimechooser.JTimeChooser tcHora;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 
-     private void obtenerfechaHoraActual() {
+    private void obtenerfechaHoraActual() {
         java.util.Date fecha = new Date();
         dcFecha.setDate(fecha);
         tcHora.setTime(fecha);
-        
     }
 
     private String obtenerFechaSeleccionada() {
@@ -361,9 +333,9 @@ public class TransaccionGUI extends javax.swing.JFrame {
 
     }
 
-    private void obtenerCategoriasByTipo() {
+    private void obtenerCategoriasByTipo(String tipo) {
         CategoriaDao objDao = FactoryDao.getFactoryInstance().getNewCategoriaDao();
-        ArrayList<Categoria> listCagtegorias = objDao.getListByTipo(cbTipoTransaccion.getSelectedItem().toString());
+        ArrayList<Categoria> listCagtegorias = objDao.getListByTipo(tipo);
         this.cbCategoria.removeAllItems();
         listCagtegorias.stream().forEach((list) -> {
             this.cbCategoria.addItem(list.getNombre());
