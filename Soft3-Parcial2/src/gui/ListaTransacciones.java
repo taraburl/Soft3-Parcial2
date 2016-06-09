@@ -1,6 +1,8 @@
 package gui;
 
+import dao.CategoriaDao;
 import dao.TransaccionDao;
+import dto.Categoria;
 import dto.Transaccion;
 import factory.FactoryDao;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         tableModel();
         idTransaccion = 1;
+        cargarTodasTransacciones();
     }
 
     @SuppressWarnings("unchecked")
@@ -53,7 +56,8 @@ public class ListaTransacciones extends javax.swing.JFrame {
         setIconImage(new ImageIcon("transaccion.png").getImage());
         setResizable(false);
 
-        pnTransacciones.setBorder(javax.swing.BorderFactory.createTitledBorder("LISTA DE TRANSACCIONES"));
+        pnTransacciones.setBackground(new java.awt.Color(187, 222, 254));
+        pnTransacciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         lbCuenta.setText("Seleccionar Cuenta:");
 
@@ -177,14 +181,9 @@ public class ListaTransacciones extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea editar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new EditaTransferencia().setVisible(true);
-                }
-            });
-            EditarTransaccion edit = new EditarTransaccion(0);
+            EditarTransaccion edit = new EditarTransaccion(Integer.parseInt(tblTransacciones.getValueAt(fila, 0).toString()));
             edit.setVisible(true);
-            this.dispose();
+            this.hide();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -193,15 +192,18 @@ public class ListaTransacciones extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea eliminar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
-            eleiminar(1);
+            eleiminar(Integer.parseInt(tblTransacciones.getValueAt(fila, 0).toString()));
+            dtmTransacciones.removeRow(fila);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnMostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostarActionPerformed
+        tableModel();
         cargarTransaccionesById(idTransaccion);
     }//GEN-LAST:event_btnMostarActionPerformed
 
     private void btnMostrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarTodoActionPerformed
+        tableModel();
         cargarTodasTransacciones();
     }//GEN-LAST:event_btnMostrarTodoActionPerformed
 
@@ -237,7 +239,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
         ArrayList<Transaccion> listCagtegorias = objDao.getList();
         for (Transaccion listCagtegoria : listCagtegorias) {
-            Object datos[] = {listCagtegoria.getIdTransaccion(), listCagtegoria.getTipo(), listCagtegoria.getIdCategoria(), listCagtegoria.getDescripcion(), listCagtegoria.getIdCuenta(), listCagtegoria.getMonto(), listCagtegoria.getFecha(), listCagtegoria.getHora()};
+            Object datos[] = {listCagtegoria.getIdTransaccion(), listCagtegoria.getTipo(), obtenerCategoriasByID(listCagtegoria.getIdCategoria()), listCagtegoria.getDescripcion(), listCagtegoria.getIdCuenta(), listCagtegoria.getMonto(), listCagtegoria.getFecha(), listCagtegoria.getHora()};
             dtmTransacciones.addRow(datos);
         }
     }
@@ -254,5 +256,11 @@ public class ListaTransacciones extends javax.swing.JFrame {
     private void eleiminar(int id) {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
         objDao.delete(id);
+    }
+    
+    private String obtenerCategoriasByID(int id) {
+        CategoriaDao objDao = FactoryDao.getFactoryInstance().getNewCategoriaDao();
+        Categoria objCategoria = objDao.get(id);
+        return objCategoria.getNombre();
     }
 }

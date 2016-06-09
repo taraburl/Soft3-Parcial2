@@ -43,9 +43,12 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="pnRealizarTransaccion">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fe" green="de" red="bb" type="rgb"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="REALIZAR TRANSACCION"/>
+            <TitledBorder/>
           </Border>
         </Property>
       </Properties>
@@ -91,7 +94,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="261" max="32767" attributes="0"/>
+                          <EmptySpace pref="269" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lbFecha" min="-2" pref="141" max="-2" attributes="0"/>
@@ -147,7 +150,7 @@
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace type="separate" pref="26" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" pref="46" max="32767" attributes="0"/>
                           <Component id="lbHora" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>

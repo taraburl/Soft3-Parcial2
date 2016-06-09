@@ -1,5 +1,9 @@
 package gui;
 
+import dao.TransaccionDao;
+import dto.Transaccion;
+import factory.FactoryDao;
+import java.util.Date;
 import org.apache.log4j.LogManager;
 
 public class EditarTransaccion extends javax.swing.JFrame {
@@ -9,6 +13,7 @@ public class EditarTransaccion extends javax.swing.JFrame {
     public EditarTransaccion(int id) {
         initComponents();
         this.setLocationRelativeTo(this);
+        cargarTransaccionesById(id);
     }
 
     @SuppressWarnings("unchecked")
@@ -38,7 +43,8 @@ public class EditarTransaccion extends javax.swing.JFrame {
 
         setTitle("TRANSACCION");
 
-        pnRealizarTransaccion.setBorder(javax.swing.BorderFactory.createTitledBorder("REALIZAR TRANSACCION"));
+        pnRealizarTransaccion.setBackground(new java.awt.Color(187, 222, 254));
+        pnRealizarTransaccion.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         lbTipoTransaccion.setText("TIPO DE TRANSACCION:");
 
@@ -121,7 +127,7 @@ public class EditarTransaccion extends javax.swing.JFrame {
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(tcHora, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(261, Short.MAX_VALUE))
+                        .addContainerGap(269, Short.MAX_VALUE))
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
                         .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -164,7 +170,7 @@ public class EditarTransaccion extends javax.swing.JFrame {
                     .addComponent(dcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
-                        .addGap(18, 26, Short.MAX_VALUE)
+                        .addGap(18, 46, Short.MAX_VALUE)
                         .addComponent(lbHora)
                         .addGap(32, 32, 32))
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
@@ -239,4 +245,17 @@ public class EditarTransaccion extends javax.swing.JFrame {
     private javax.swing.JTextField txtMonto;
     private javax.swing.JTextField txtNroCuenta;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTransaccionesById(int id) {
+        TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
+        Transaccion objTransaccion = objDao.get(id);
+        if (objTransaccion != null) {
+            txtMonto.setText("" + objTransaccion.getMonto());
+            txtDescripcion.setText(objTransaccion.getDescripcion());
+            cbTipoTransaccion.setSelectedItem(objTransaccion.getTipo());
+            txtNroCuenta.setText(objTransaccion.getIdCuenta() + "");
+            tcHora.setTime(new Date(objTransaccion.getHora()));
+            dcFecha.setDate(new Date(objTransaccion.getFecha()));
+        }
+    }
 }

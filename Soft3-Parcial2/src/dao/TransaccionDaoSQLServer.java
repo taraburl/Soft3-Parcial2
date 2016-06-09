@@ -78,7 +78,7 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
         ArrayList<Transaccion> transacciones = new ArrayList<>();
         try {
             Conexion objConexion = Conexion.getOrCreate();
-            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spCategoriaPorTipo");
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spTransacciones");
             ResultSet objResultSet = ps.executeQuery();
             
             while (objResultSet.next()) {
@@ -96,10 +96,10 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
                 obj.setMonto(_monto);
                 
                 int _idCategoria = objResultSet.getInt("idCategoria");
-                obj.setIdTransaccion(_idCategoria);
+                obj.setIdCategoria(_idCategoria);
                 
                 int _idCuenta = objResultSet.getInt("idCuenta");
-                obj.setIdTransaccion(_idCuenta);
+                obj.setIdCuenta(_idCuenta);
                 
                 String _fecha = objResultSet.getString("fecha");
                 obj.setFecha(_fecha);
