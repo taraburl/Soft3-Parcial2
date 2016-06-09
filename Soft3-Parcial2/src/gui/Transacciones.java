@@ -64,7 +64,7 @@ public class Transacciones extends javax.swing.JFrame {
         lbFecha = new javax.swing.JLabel();
         lbHora = new javax.swing.JLabel();
         tcHora = new lu.tudor.santec.jtimechooser.JTimeChooser();
-        jButton1 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setTitle("TRANSACCIONES");
         setIconImage(new ImageIcon("transaccion.png").getImage());
@@ -121,11 +121,11 @@ public class Transacciones extends javax.swing.JFrame {
 
         tcHora.setToolTipText("");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar.png"))); // NOI18N
-        jButton1.setText("CANCELAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar.png"))); // NOI18N
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -177,7 +177,7 @@ public class Transacciones extends javax.swing.JFrame {
                         .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnRealizarTransaccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnRealizarTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
                         .addGap(12, 12, 12))))
         );
@@ -221,7 +221,7 @@ public class Transacciones extends javax.swing.JFrame {
                     .addGroup(pnRealizarTransaccionLayout.createSequentialGroup()
                         .addComponent(btnRealizarTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -254,33 +254,13 @@ public class Transacciones extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMontoKeyTyped
 
     private void btnRealizarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarTransaccionActionPerformed
-        int ids = obtenerIdCategoria(cbCategoria.getSelectedItem().toString());
-        int idsc = obtenerIdCuenta(cbCuenta.getSelectedItem().toString());
+        obtenerIdCategoria(cbCategoria.getSelectedItem().toString());
+        obtenerIdCuenta(cbCuenta.getSelectedItem().toString());
         if (!txtMonto.getText().isEmpty() && !txtDescripcion.getText().isEmpty() && idCategoria > 0 && idCuenta > 0) {
-            if (idSaldo >= Double.parseDouble(txtMonto.getText())) {
-                try {
-                    TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
-
-                    Transaccion obj = new Transaccion();
-                    obj.setDescripcion(txtDescripcion.getText());
-                    obj.setFecha(obtenerFechaSeleccionada());
-                    obj.setHora(obtenerHoraSeleccionada());
-                    obj.setIdCategoria(idCategoria);
-                    obj.setIdCuenta(idCuenta);
-                    obj.setMonto(Double.parseDouble(txtMonto.getText()));
-                    obj.setTipo(cbTipoTransaccion.getSelectedItem().toString());
-
-                    int id = objDao.insert(obj);
-                    obj = objDao.get(id);
-
-                    JOptionPane.showMessageDialog(this, "Transaccion realizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
-                    ListaTransacciones listTranscciones = new ListaTransacciones();
-                    listTranscciones.setVisible(true);
-                    this.hide();
-                } catch (Exception ex) {
-                    logger.error("Error al realizar Transaccion: " + ex.toString());
-                    JOptionPane.showMessageDialog(this, "No se pudo realizar la transaccion ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-                }
+            if (idSaldo >= Double.parseDouble(txtMonto.getText()) && !cbTipoTransaccion.getSelectedItem().toString().equals("Gasto")) {
+                insertar();
+            } else if (cbTipoTransaccion.getSelectedItem().toString().equals("Ingreso")) {
+                insertar();
             } else {
                 JOptionPane.showMessageDialog(this, "Saldo insuficiente para realizar la transaccion/n su saldo actual es "
                         + idSaldo, "MENSAJE", JOptionPane.ERROR_MESSAGE);
@@ -294,18 +274,18 @@ public class Transacciones extends javax.swing.JFrame {
         obtenerCategoriasByTipo(cbTipoTransaccion.getSelectedItem().toString());
     }//GEN-LAST:event_cbTipoTransaccionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.hide();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCategoria;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRealizarTransaccion;
     private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbCuenta;
     private javax.swing.JComboBox<String> cbTipoTransaccion;
     private com.toedter.calendar.JDateChooser dcFecha;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbCategoria;
@@ -381,11 +361,10 @@ public class Transacciones extends javax.swing.JFrame {
         });
     }
 
-    private int obtenerIdCategoria(String nombre) {
+    private void obtenerIdCategoria(String nombre) {
         listCagtegorias.stream().filter((objCategoria) -> (objCategoria.getNombre().equals(nombre))).forEach((objCategoria) -> {
-            idCategoria = objCategoria.getIdCategoria();
+            this.idCategoria = objCategoria.getIdCategoria();
         });
-        return idCategoria;
     }
 
     private void obtenerCuentas() {
@@ -393,15 +372,40 @@ public class Transacciones extends javax.swing.JFrame {
         lisCuentas = objDao.getList();
         this.cbCuenta.removeAllItems();
         lisCuentas.stream().forEach((list) -> {
-            this.cbCategoria.addItem(list.getNombreCuenta());
+            this.cbCuenta.addItem(list.getNombreCuenta());
         });
     }
 
-    private int obtenerIdCuenta(String nombre) {
+    private void obtenerIdCuenta(String nombre) {
         lisCuentas.stream().filter((objCuenta) -> (nombre.equals(objCuenta.getNombreCuenta()))).forEach((objCuenta) -> {
-            idCuenta = objCuenta.getIdCuenta();
-            idSaldo = objCuenta.getSaldo();
+            this.idCuenta = objCuenta.getIdCuenta();
+            this.idSaldo = objCuenta.getSaldo();
         });
-        return idCuenta;
+    }
+
+    private void insertar() {
+        try {
+            TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
+
+            Transaccion obj = new Transaccion();
+            obj.setDescripcion(txtDescripcion.getText());
+            obj.setFecha(obtenerFechaSeleccionada());
+            obj.setHora(obtenerHoraSeleccionada());
+            obj.setIdCategoria(idCategoria);
+            obj.setIdCuenta(idCuenta);
+            obj.setMonto(Double.parseDouble(txtMonto.getText()));
+            obj.setTipo(cbTipoTransaccion.getSelectedItem().toString());
+
+            int id = objDao.insert(obj);
+            obj = objDao.get(id);
+
+            JOptionPane.showMessageDialog(this, "Transaccion realizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            ListaTransacciones listTranscciones = new ListaTransacciones();
+            listTranscciones.setVisible(true);
+            this.hide();
+        } catch (Exception ex) {
+            logger.error("Error al realizar Transaccion: " + ex.toString());
+            JOptionPane.showMessageDialog(this, "No se pudo realizar la transaccion ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+        }
     }
 }

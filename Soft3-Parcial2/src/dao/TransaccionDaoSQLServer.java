@@ -156,5 +156,48 @@ public class TransaccionDaoSQLServer extends TransaccionDao {
         }
         return null;
     }
+
+    @Override
+    public ArrayList<Transaccion> getListByCuenta(int id) {
+        ArrayList<Transaccion> transacciones = new ArrayList<>();
+        try {
+            Conexion objConexion = Conexion.getOrCreate();
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spTransaccionesByIdCuenta ?");
+            ps.setInt(1, id);
+            ResultSet objResultSet = ps.executeQuery();
+            
+            while (objResultSet.next()) {
+                Transaccion obj = new Transaccion();
+                int _idTransaccion = objResultSet.getInt("idTransaccion");
+                obj.setIdTransaccion(_idTransaccion);
+                
+                String _tipo = objResultSet.getString("tipo");
+                obj.setTipo(_tipo);
+                
+                String _descripcion = objResultSet.getString("descripcion");
+                obj.setDescripcion(_descripcion);
+                
+                Double _monto = objResultSet.getDouble("monto");
+                obj.setMonto(_monto);
+                
+                int _idCategoria = objResultSet.getInt("idCategoria");
+                obj.setIdCategoria(_idCategoria);
+                
+                int _idCuenta = objResultSet.getInt("idCuenta");
+                obj.setIdCuenta(_idCuenta);
+                
+                String _fecha = objResultSet.getString("fecha");
+                obj.setFecha(_fecha);
+                
+                String _hora = objResultSet.getString("hora");
+                obj.setHora(_hora);
+                
+                transacciones.add(obj);
+            }
+        } catch (Exception ex) {
+            logger.error("Error al obtener todos las transacciones:" + ex.toString());
+        }
+        return transacciones;
+    }
     
 }

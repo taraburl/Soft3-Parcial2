@@ -1,14 +1,25 @@
 package gui;
 
+import dao.CategoriaDao;
+import dao.CuentaDao;
 import dao.TransaccionDao;
+import dto.Categoria;
+import dto.Cuenta;
 import dto.Transaccion;
 import factory.FactoryDao;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import org.apache.log4j.LogManager;
 
 public class EditarTransaccion extends javax.swing.JFrame {
 
     private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
+    private ArrayList<Categoria> listCagtegorias;
+    private double saldoCuenta;
+    private int idCategoria;
 
     public EditarTransaccion(int id) {
         initComponents();
@@ -75,6 +86,11 @@ public class EditarTransaccion extends javax.swing.JFrame {
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png"))); // NOI18N
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         dcFecha.setDateFormatString("dd/MM/yyyy");
 
@@ -222,6 +238,21 @@ public class EditarTransaccion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMontoKeyTyped
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        obtenerIdCategoria(cbCategoria.getSelectedItem().toString());
+        if (!txtMonto.getText().isEmpty() && !txtDescripcion.getText().isEmpty() && idCategoria > 0 && Integer.parseInt(txtNroCuenta.getText()) > 0) {
+            if (saldoCuenta > Double.parseDouble(txtMonto.getText()) && !cbTipoTransaccion.getSelectedItem().toString().equals("Gasto")) {
+                actualizar();
+            } else if (cbTipoTransaccion.getSelectedItem().toString().equals("Ingreso")) {
+                actualizar();
+            } else {
+                JOptionPane.showMessageDialog(this, "El saldo es insuciente", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Coloque todos los datos correctamente", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCategoria;
@@ -253,9 +284,135 @@ public class EditarTransaccion extends javax.swing.JFrame {
             txtMonto.setText("" + objTransaccion.getMonto());
             txtDescripcion.setText(objTransaccion.getDescripcion());
             cbTipoTransaccion.setSelectedItem(objTransaccion.getTipo());
+            obtenerCategoriasByTipo(cbTipoTransaccion.getSelectedItem().toString());
+            cbCategoria.setSelectedItem(obtenerCategoriaNombre(objTransaccion.getIdCategoria()));
             txtNroCuenta.setText(objTransaccion.getIdCuenta() + "");
-            tcHora.setTime(new Date(objTransaccion.getHora()));
-            dcFecha.setDate(new Date(objTransaccion.getFecha()));
+            tcHora.setTime(obtenerFecha(objTransaccion.getFecha(), objTransaccion.getHora()));
+            dcFecha.setDate(obtenerFecha(objTransaccion.getFecha(), objTransaccion.getHora()));
         }
     }
+
+    private void obtenerCategoriasByTipo(String tipo) {
+        CategoriaDao objDao = FactoryDao.getFactoryInstance().getNewCategoriaDao();
+        listCagtegorias = objDao.getListByTipo(tipo);
+        this.cbCategoria.removeAllItems();
+        listCagtegorias.stream().forEach((list) -> {
+            this.cbCategoria.addItem(list.getNombre());
+        });
+    }
+
+    private void obtenerIdCategoria(String nombre) {
+        listCagtegorias.stream().filter((objCategoria) -> (objCategoria.getNombre().equals(nombre))).forEach((objCategoria) -> {
+            this.idCategoria = objCategoria.getIdCategoria();
+        });
+    }
+
+    private String obtenerCategoriaNombre(int idCat) {
+        for (Categoria objCategoria : listCagtegorias) {
+            if (objCategoria.getIdCategoria() == idCat) {
+                return objCategoria.getNombre();
+            }
+        }
+        return "";
+    }
+
+    private Date obtenerFecha(String fecha, String hour) {
+        int dia = 0;
+        int mes = 0;
+        int year = 0;
+        int hora = 0;
+        int min = 0;
+        int seg = 0;
+        ArrayList<String> numeros = new ArrayList<>();
+        String num[] = fecha.split("/");
+        numeros.addAll(Arrays.asList(num));
+        year = Integer.parseInt(numeros.get(0));
+        mes = Integer.parseInt(numeros.get(1));
+        dia = Integer.parseInt(numeros.get(2));
+        ArrayList<String> numeros2 = new ArrayList<>();
+        String num2[] = hour.split(":");
+        numeros2.addAll(Arrays.asList(num2));
+        hora = Integer.parseInt(numeros2.get(0));
+        min = Integer.parseInt(numeros2.get(1));
+        seg = Integer.parseInt(numeros2.get(2));
+        return new Date(year, mes, dia, hora, min, seg);
+    }
+
+    public void obtenerCuenta(int id) {
+        CuentaDao objDao = FactoryDao.getFactoryInstance().getNewCuentaDao();
+        Cuenta cuenta = objDao.get(id);
+        this.saldoCuenta = cuenta.getSaldo();
+    }
+
+    private String obtenerFechaSeleccionada() {
+        String mes0 = "";
+        String dia0 = "";
+        int year = dcFecha.getCalendar().get(Calendar.YEAR);
+        int mes = dcFecha.getCalendar().get(Calendar.MONTH) + 1;
+        int dia = dcFecha.getCalendar().get(Calendar.DAY_OF_MONTH);
+        if (mes < 10) {
+            mes0 = "/0" + mes;
+        } else {
+            mes0 = "/" + mes;
+        }
+        if (dia < 10) {
+            dia0 = "/0" + dia;
+        } else {
+            dia0 = "/" + dia;
+        }
+        return year + mes0 + dia0;
+    }
+
+    private String obtenerHoraSeleccionada() {
+        String hora0 = "";
+        String minutos0 = "";
+        String segundos0 = "";
+        int hora = tcHora.getHours();
+        int minutos = tcHora.getMinutes();
+        int segundos = tcHora.getMinutes();
+        if (hora < 10) {
+            hora0 = "0" + hora + ":";
+        } else {
+            hora0 = hora + ":";
+        }
+        if (minutos < 10) {
+            minutos0 = "0" + minutos + ":";
+        } else {
+            minutos0 = minutos + ":";
+        }
+        if (segundos < 10) {
+            segundos0 = "0" + segundos + ":";
+        } else {
+            segundos0 = segundos + "";
+        }
+        return hora0 + minutos0 + segundos0;
+
+    }
+
+    private void actualizar() {
+        try {
+            TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
+
+            Transaccion obj = new Transaccion();
+            obj.setDescripcion(txtDescripcion.getText());
+            obj.setFecha(obtenerFechaSeleccionada());
+            obj.setHora(obtenerHoraSeleccionada());
+            obj.setIdCategoria(idCategoria);
+            obj.setIdCuenta(Integer.parseInt(txtNroCuenta.getText()));
+            obj.setMonto(Double.parseDouble(txtMonto.getText()));
+            obj.setTipo(cbTipoTransaccion.getSelectedItem().toString());
+
+            int id = objDao.insert(obj);
+            obj = objDao.get(id);
+
+            JOptionPane.showMessageDialog(this, "Transaccion realizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+            ListaTransacciones listTranscciones = new ListaTransacciones();
+            listTranscciones.setVisible(true);
+            this.hide();
+        } catch (Exception ex) {
+            logger.error("Error al realizar Transaccion: " + ex.toString());
+            JOptionPane.showMessageDialog(this, "No se pudo realizar la transaccion ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
 }

@@ -1,8 +1,10 @@
 package gui;
 
 import dao.CategoriaDao;
+import dao.CuentaDao;
 import dao.TransaccionDao;
 import dto.Categoria;
+import dto.Cuenta;
 import dto.Transaccion;
 import factory.FactoryDao;
 import java.util.ArrayList;
@@ -15,7 +17,8 @@ public class ListaTransacciones extends javax.swing.JFrame {
 
     private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
     private DefaultTableModel dtmTransacciones;
-    private int idTransaccion;
+    private int idCuenta;
+    private ArrayList<Cuenta> lisCuentas;
 
     public ListaTransacciones() {
         try {
@@ -31,8 +34,8 @@ public class ListaTransacciones extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(this);
         tableModel();
-        idTransaccion = 1;
         cargarTodasTransacciones();
+        obtenerCuentas();
     }
 
     @SuppressWarnings("unchecked")
@@ -199,7 +202,8 @@ public class ListaTransacciones extends javax.swing.JFrame {
 
     private void btnMostarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostarActionPerformed
         tableModel();
-        cargarTransaccionesById(idTransaccion);
+        obtenerIdCuenta(cbCuenta.getSelectedItem().toString());
+        cargarTransaccionesByIdCuenta(idCuenta);
     }//GEN-LAST:event_btnMostarActionPerformed
 
     private void btnMostrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarTodoActionPerformed
@@ -237,18 +241,18 @@ public class ListaTransacciones extends javax.swing.JFrame {
 
     private void cargarTodasTransacciones() {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
-        ArrayList<Transaccion> listCagtegorias = objDao.getList();
-        for (Transaccion listCagtegoria : listCagtegorias) {
-            Object datos[] = {listCagtegoria.getIdTransaccion(), listCagtegoria.getTipo(), obtenerCategoriasByID(listCagtegoria.getIdCategoria()), listCagtegoria.getDescripcion(), listCagtegoria.getIdCuenta(), listCagtegoria.getMonto(), listCagtegoria.getFecha(), listCagtegoria.getHora()};
+        ArrayList<Transaccion> listTransaccion = objDao.getList();
+        for (Transaccion objTransaccion : listTransaccion) {
+            Object datos[] = {objTransaccion.getIdTransaccion(), objTransaccion.getTipo(), obtenerCategoriaByID(objTransaccion.getIdCategoria()), objTransaccion.getDescripcion(), objTransaccion.getIdCuenta(), objTransaccion.getMonto(), objTransaccion.getFecha(), objTransaccion.getHora()};
             dtmTransacciones.addRow(datos);
         }
     }
 
-    private void cargarTransaccionesById(int id) {
+    private void cargarTransaccionesByIdCuenta(int id) {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
-        Transaccion transaccion = objDao.get(id);
-        if (transaccion != null) {
-            Object datos[] = {transaccion.getIdTransaccion(), transaccion.getTipo(), transaccion.getIdCategoria(), transaccion.getDescripcion(), transaccion.getIdCuenta(), transaccion.getMonto(), transaccion.getFecha(), transaccion.getHora()};
+        ArrayList<Transaccion> listTransaccion = objDao.getListByCuenta(id);
+        for (Transaccion objTransaccion : listTransaccion) {
+            Object datos[] = {objTransaccion.getIdTransaccion(), objTransaccion.getTipo(), obtenerCategoriaByID(objTransaccion.getIdCategoria()), objTransaccion.getDescripcion(), objTransaccion.getIdCuenta(), objTransaccion.getMonto(), objTransaccion.getFecha(), objTransaccion.getHora()};
             dtmTransacciones.addRow(datos);
         }
     }
@@ -257,10 +261,25 @@ public class ListaTransacciones extends javax.swing.JFrame {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
         objDao.delete(id);
     }
-    
-    private String obtenerCategoriasByID(int id) {
+
+    private String obtenerCategoriaByID(int id) {
         CategoriaDao objDao = FactoryDao.getFactoryInstance().getNewCategoriaDao();
         Categoria objCategoria = objDao.get(id);
         return objCategoria.getNombre();
+    }
+
+    private void obtenerCuentas() {
+        CuentaDao objDao = FactoryDao.getFactoryInstance().getNewCuentaDao();
+        lisCuentas = objDao.getList();
+        this.cbCuenta.removeAllItems();
+        lisCuentas.stream().forEach((list) -> {
+            this.cbCuenta.addItem(list.getNombreCuenta());
+        });
+    }
+
+    private void obtenerIdCuenta(String nombre) {
+        lisCuentas.stream().filter((objCuenta) -> (nombre.equals(objCuenta.getNombreCuenta()))).forEach((objCuenta) -> {
+            this.idCuenta = objCuenta.getIdCuenta();
+        });
     }
 }
