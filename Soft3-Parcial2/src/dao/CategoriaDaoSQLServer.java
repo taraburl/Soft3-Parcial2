@@ -5,8 +5,11 @@ import dto.Categoria;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import org.apache.log4j.LogManager;
 
 public class CategoriaDaoSQLServer extends CategoriaDao {
+
+    private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
 
     public CategoriaDaoSQLServer() {
         ;
@@ -45,8 +48,8 @@ public class CategoriaDaoSQLServer extends CategoriaDao {
 
             PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spCategoriaPorTipo  ?");
             ps.setString(1, tipo);
+            ResultSet objResultSet = ps.executeQuery();
 
-            ResultSet objResultSet = objConexion.ejecutar(ps.toString());
             while (objResultSet.next()) {
                 Categoria categoria = new Categoria();
                 int _categoriaId = objResultSet.getInt("idCategoria");
@@ -57,12 +60,13 @@ public class CategoriaDaoSQLServer extends CategoriaDao {
 
                 String _tipo = objResultSet.getString("tipo");
                 categoria.setTipo(_tipo);
-                
+
                 categorias.add(categoria);
             }
 
             objConexion.desconectar();
         } catch (Exception e) {
+            logger.error("Error al obtener categoria por tipo: " + e.toString());
         }
         return categorias;
     }

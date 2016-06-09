@@ -124,11 +124,31 @@ public class ConexionSQLServer extends Conexion {
             Statement stmt = objConnection.createStatement();
             stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();   
+            rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
             System.out.println("Error al ejecutar el metodo ejecutarInsert() " + e.toString());
             return 0;
+        }
+    }
+
+    @Override
+    public void ejecutarConsulta(String sql) {
+        try {
+            Statement consulta = objConnection.createStatement();
+            consulta.executeUpdate(sql);
+        } catch (SQLException e) {
+
+        }
+    }
+
+    @Override
+    public ResultSet obtenerConsulta(String sql) {
+        try {
+            Statement consulta = objConnection.createStatement();
+            return consulta.executeQuery(sql);
+        } catch (SQLException e) {
+            return null;
         }
     }
 }

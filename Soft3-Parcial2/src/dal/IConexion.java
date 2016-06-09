@@ -69,5 +69,11 @@ public interface IConexion {
      * @return true o false
      */
     public boolean estaConectado();
+    
+    
+    
+    public void ejecutarConsulta(String sql);
+    
+    public ResultSet obtenerConsulta(String sql);
 
 }

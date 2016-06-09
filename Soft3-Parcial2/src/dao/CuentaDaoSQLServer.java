@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CuentaDaoSQLServer extends CuentaDao {
 
     public CuentaDaoSQLServer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ;
     }
 
     @Override
