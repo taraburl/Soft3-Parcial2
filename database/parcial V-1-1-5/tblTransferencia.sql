@@ -65,6 +65,8 @@ BEGIN
 		BEGIN TRAN 
 			INSERT INTO tblTransferencia(monto, fechaHora, descripcion, idCuentaOrigen,idCuentaDestino)
 			VALUES ( @monto, @fechaHora, @descripcion, @idCuentaOrigen, @idCuentaDestino) 
+			update tblCuenta set saldo = saldo-@monto where idCuenta = @idCuentaOrigen
+			update tblCuenta set saldo = saldo+@monto where idCuenta = @idCuentaDestino
 		COMMIT
 	END TRY
 	BEGIN CATCH
@@ -72,7 +74,7 @@ BEGIN
 		PRINT ERROR_MESSAGE()
 	END CATCH
 END
-GO
+
 
 CREATE PROCEDURE [dbo].[spUpdateTransferencia]  
 	@idTransferencia int,
@@ -85,9 +87,18 @@ AS
 BEGIN
 	BEGIN TRY
 		BEGIN TRAN 
+		--restauro cuentas a movimiento anterior
+			update tblCuenta set saldo = saldo+(select monto from tblTransferencia where idTransferencia=@idTransferencia) 
+			where idCuenta = @idCuentaOrigen
+			update tblCuenta set saldo = saldo-(select monto from tblTransferencia where idTransferencia=@idTransferencia) 
+			where idCuenta = @idCuentaDestino
+			--actualiza tabla
 			UPDATE tblTransferencia
 			SET  monto = @monto, fechaHora=@fechaHora, descripcion = @descripcion, idCuentaOrigen = @idCuentaOrigen, 
 			idCuentaDestino = @idCuentaDestino WHERE idTransferencia = @idTransferencia
+			--actualiza cuentas con el nuevo movimiento
+			update tblCuenta set saldo = saldo-@monto where idCuenta = @idCuentaOrigen
+			update tblCuenta set saldo = saldo+@monto where idCuenta = @idCuentaDestino
 		COMMIT
 	END TRY
 	BEGIN CATCH
@@ -95,7 +106,6 @@ BEGIN
 		PRINT ERROR_MESSAGE()
 	END CATCH
 END
-GO
 
 create PROCEDURE [dbo].[spSelectAllTransferencia]
 AS 
