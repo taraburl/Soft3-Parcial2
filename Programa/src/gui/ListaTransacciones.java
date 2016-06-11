@@ -34,8 +34,9 @@ public class ListaTransacciones extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(this);
         tableModel();
-        cargarTodasTransacciones();
         obtenerCuentas();
+        cargarTodasTransacciones();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -54,15 +55,20 @@ public class ListaTransacciones extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("TRANSACCIONES");
         setIconImage(new ImageIcon("transaccion.png").getImage());
         setResizable(false);
 
         pnTransacciones.setBackground(new java.awt.Color(187, 222, 254));
-        pnTransacciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        lbCuenta.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         lbCuenta.setText("Seleccionar Cuenta:");
+
+        cbCuenta.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
 
         tblTransacciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,6 +83,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblTransacciones);
 
+        btnMostar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         btnMostar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mostrar.png"))); // NOI18N
         btnMostar.setText("MOSTRAR");
         btnMostar.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +92,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
             }
         });
 
+        btnMostrarTodo.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         btnMostrarTodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mostrarTodo.png"))); // NOI18N
         btnMostrarTodo.setText("MOSTRAR TODAS LAS TRANSACCIONES");
         btnMostrarTodo.addActionListener(new java.awt.event.ActionListener() {
@@ -93,6 +101,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
             }
         });
 
+        btnEditar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png"))); // NOI18N
         btnEditar.setText("EDITAR");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +110,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
             }
         });
 
+        btnEliminar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/borrar.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +121,15 @@ public class ListaTransacciones extends javax.swing.JFrame {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jButton1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/transaccionicon.png"))); // NOI18N
+        jButton1.setText("REALIZAR TRANSACCION");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnTransaccionesLayout = new javax.swing.GroupLayout(pnTransacciones);
         pnTransacciones.setLayout(pnTransaccionesLayout);
         pnTransaccionesLayout.setHorizontalGroup(
@@ -118,6 +137,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
             .addGroup(pnTransaccionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator4)
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane1)
                     .addGroup(pnTransaccionesLayout.createSequentialGroup()
@@ -126,30 +146,38 @@ public class ListaTransacciones extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTransaccionesLayout.createSequentialGroup()
-                        .addComponent(lbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnMostar)
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnMostrarTodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnMostrarTodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnTransaccionesLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnTransaccionesLayout.setVerticalGroup(
             pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTransaccionesLayout.createSequentialGroup()
-                .addGroup(pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(27, 27, 27)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnMostar)
                         .addComponent(cbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lbCuenta))
-                    .addComponent(btnMostrarTodo)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnMostrarTodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -195,7 +223,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         if (fila < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione la fila que decea eliminar", "MENSAJE", JOptionPane.WARNING_MESSAGE);
         } else {
-            eleiminar(Integer.parseInt(tblTransacciones.getValueAt(fila, 0).toString()));
+            eliminar(Integer.parseInt(tblTransacciones.getValueAt(fila, 0).toString()));
             dtmTransacciones.removeRow(fila);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -211,16 +239,24 @@ public class ListaTransacciones extends javax.swing.JFrame {
         cargarTodasTransacciones();
     }//GEN-LAST:event_btnMostrarTodoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Transacciones trans = new Transacciones();
+        trans.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnMostar;
     private javax.swing.JButton btnMostrarTodo;
     private javax.swing.JComboBox<String> cbCuenta;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lbCuenta;
     private javax.swing.JPanel pnTransacciones;
     private javax.swing.JTable tblTransacciones;
@@ -257,9 +293,10 @@ public class ListaTransacciones extends javax.swing.JFrame {
         }
     }
 
-    private void eleiminar(int id) {
+    private void eliminar(int id) {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
         objDao.delete(id);
+        JOptionPane.showMessageDialog(this, "Transaccion ELiminada Correctamente", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private String obtenerCategoriaByID(int id) {

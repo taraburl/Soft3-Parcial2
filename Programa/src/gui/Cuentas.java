@@ -165,12 +165,6 @@ public class Cuentas extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.hide();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ListaCuentas().setVisible(true);
-            }
-        });
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -194,7 +188,7 @@ public class Cuentas extends javax.swing.JFrame {
 
             int id = objCuentaDao.insert(obj);
             obj = objCuentaDao.get(id);
-
+            Principal.obtenerCuentas();
             JOptionPane.showMessageDialog(this, "cuenta registrada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
             ListaCuentas listaCuentas = new ListaCuentas();
             listaCuentas.setVisible(true);

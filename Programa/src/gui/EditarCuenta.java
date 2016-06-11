@@ -220,7 +220,7 @@ public class EditarCuenta extends javax.swing.JFrame {
             obj.setSaldo(Double.parseDouble(txtMonto.getText()));
 
             objDao.update(obj);
-
+            Principal.obtenerCuentas();
             JOptionPane.showMessageDialog(this, "Cuenta realizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
             ListaCuentas listaCuentas = new ListaCuentas();
             listaCuentas.setVisible(true);

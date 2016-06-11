@@ -1,6 +1,5 @@
 package gui;
 
-
 import dao.CuentaDao;
 import dto.Cuenta;
 import factory.FactoryDao;
@@ -25,7 +24,7 @@ public class ListaCuentas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-          java.util.logging.Logger.getLogger(ListaCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         initComponents();
         this.setLocationRelativeTo(this);
@@ -91,6 +90,11 @@ public class ListaCuentas extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-icon.png"))); // NOI18N
         jButton1.setText("NUEVA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnCuentasLayout = new javax.swing.GroupLayout(pnCuentas);
         pnCuentas.setLayout(pnCuentasLayout);
@@ -174,6 +178,12 @@ public class ListaCuentas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Cuentas categorias = new Cuentas();
+        categorias.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
@@ -191,7 +201,7 @@ public class ListaCuentas extends javax.swing.JFrame {
         dtmCuentas.addColumn("ID");
         dtmCuentas.addColumn("Nombre Cuenta");
         dtmCuentas.addColumn("Saldo");
- 
+
         tblCuentas.setModel(dtmCuentas);
     }
 
@@ -204,10 +214,10 @@ public class ListaCuentas extends javax.swing.JFrame {
         }
     }
 
-
     private void eliminar(int id) {
         CuentaDao objDao = FactoryDao.getFactoryInstance().getNewCuentaDao();
         objDao.delete(id);
+        Principal.obtenerCuentas();
     }
 
 }
