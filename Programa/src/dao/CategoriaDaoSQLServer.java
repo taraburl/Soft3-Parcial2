@@ -2,8 +2,10 @@ package dao;
 
 import dal.Conexion;
 import dto.Categoria;
+import dto.Cuenta;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import org.apache.log4j.LogManager;
 
@@ -17,27 +19,105 @@ public class CategoriaDaoSQLServer extends CategoriaDao {
 
     @Override
     public int insert(Categoria obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion objConexion = Conexion.getOrCreate();
+
+        int id = 0;
+
+        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spinsertarcategoria  ?,?");
+        ps.setString(1, obj.getNombre());
+        ps.setString(2, obj.getTipo());
+        id = ps.executeUpdate();
+
+        if (id == 0) {
+            throw new Exception("El registro no pudo ser insertado");
+        }
+
+        objConexion.desconectar();
+        return id;
+
     }
 
     @Override
     public void update(Categoria obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion objConexion = Conexion.getOrCreate();
+
+        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spactualizarcategoria ?,?,?");
+        ps.setInt(1, obj.getIdCategoria());
+        ps.setString(2, obj.getNombre());
+        ps.setString(3, obj.getTipo());
+        int upd = ps.executeUpdate();
+        if (upd == 0) {
+            throw new Exception("El registro no pudo ser insertado");
+        }
+        objConexion.desconectar();
     }
 
     @Override
     public void delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Conexion objConexion = Conexion.getOrCreate();
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC speliminarcategoria ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            objConexion.desconectar();
+        } catch (SQLException ex) {
+            logger.error("Error al Eliminar: " + ex.toString());
+        }
     }
 
     @Override
     public ArrayList<Categoria> getList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Categoria> categoria = new ArrayList<>();
+        try {
+            Conexion objConexion = Conexion.getOrCreate();
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spselectCategoria");
+            ResultSet objResultSet = ps.executeQuery();
+
+            while (objResultSet.next()) {
+                Categoria obj = new Categoria();
+                int _idCuenta = objResultSet.getInt("idCategoria");
+                obj.setIdCategoria(_idCuenta);
+
+                String _nombre = objResultSet.getString("nombre");
+                obj.setNombre(_nombre);
+
+                String _tipo = objResultSet.getString("tipo");
+                obj.setTipo(_tipo);
+
+                categoria.add(obj);
+            }
+        } catch (Exception ex) {
+            logger.error("Error al obtener todos las categoria:" + ex.toString());
+        }
+        return categoria;
     }
 
     @Override
     public Categoria get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            Conexion objConexion = Conexion.getOrCreate();
+            PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spselectCategoriaByid ?");
+            ps.setInt(1, id);
+            ResultSet objResultSet = ps.executeQuery();
+
+            if (objResultSet.next()) {
+                Categoria obj = new Categoria();
+                int _idCuenta = objResultSet.getInt("idCategoria");
+                obj.setIdCategoria(_idCuenta);
+
+                String _nombre = objResultSet.getString("nombre");
+                obj.setNombre(_nombre);
+
+                String _tipo = objResultSet.getString("tipo");
+                obj.setTipo(_tipo);
+                return obj;
+
+            }
+        } catch (Exception ex) {
+            logger.error("Error al obtener todos las categoria:" + ex.toString());
+        }
+        return null;
     }
 
     @Override
