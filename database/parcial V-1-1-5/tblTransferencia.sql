@@ -37,3 +37,76 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+create PROCEDURE [dbo].[spDeleteTransferencia]   @idTransferencia int
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRAN 
+			DELETE FROM tblTransferencia
+			WHERE idTransferencia = @idTransferencia
+		COMMIT
+	END TRY
+	BEGIN CATCH
+		ROLLBACK
+		PRINT ERROR_MESSAGE()
+	END CATCH
+END
+GO
+
+create PROCEDURE [dbo].[spInsertTransferencia]   
+	@monto decimal(18,0),
+	@fechaHora datetime,
+	@descripcion varchar(500),	
+	@idCuentaOrigen int,
+	@idCuentaDestino int
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRAN 
+			INSERT INTO tblTransferencia(monto, fechaHora, descripcion, idCuentaOrigen,idCuentaDestino)
+			VALUES ( @monto, @fechaHora, @descripcion, @idCuentaOrigen, @idCuentaDestino) 
+		COMMIT
+	END TRY
+	BEGIN CATCH
+		ROLLBACK
+		PRINT ERROR_MESSAGE()
+	END CATCH
+END
+GO
+
+CREATE PROCEDURE [dbo].[spUpdateTransferencia]  
+	@idTransferencia int,
+	@monto decimal(18,0),
+	@fechaHora datetime,
+	@descripcion varchar(500),	
+	@idCuentaOrigen int,
+	@idCuentaDestino int
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRAN 
+			UPDATE tblTransferencia
+			SET  monto = @monto, fechaHora=@fechaHora, descripcion = @descripcion, idCuentaOrigen = @idCuentaOrigen, 
+			idCuentaDestino = @idCuentaDestino WHERE idTransferencia = @idTransferencia
+		COMMIT
+	END TRY
+	BEGIN CATCH
+		ROLLBACK
+		PRINT ERROR_MESSAGE()
+	END CATCH
+END
+GO
+
+create PROCEDURE [dbo].[spSelectAllTransferencia]
+AS 
+BEGIN
+	SELECT * FROM tblTransferencia
+END 
+GO
+
+create PROCEDURE [dbo].[spTransferenciaById]  @id int
+AS 
+BEGIN
+	SELECT * FROM tblTransferencia where idTransferencia = @id
+END 
+GO
