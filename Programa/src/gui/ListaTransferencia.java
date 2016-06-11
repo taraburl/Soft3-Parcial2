@@ -1,6 +1,9 @@
 package gui;
 
 import Utils.Modelo;
+import dao.TransferenciaDao;
+import factory.FactoryDao;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -65,22 +68,29 @@ public class ListaTransferencia extends javax.swing.JFrame {
         alignText(jtDetalle, 5, JLabel.RIGHT);
         alignText(jtDetalle, 6, JLabel.RIGHT);
 
-        jtDetalle.putClientProperty("terminateEditOnFocusLost", true);
-        jtDetalle.getModel().addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e.getColumn() != -1) {
-                    modelo.validarFila(e.getFirstRow(), columnas_visibles);
-                }
-            }
-        });
-
+        jtDetalle.putClientProperty("terminateEditOnFocusLost", true);       
         this.modelo.removeModel();
 
     }
 
     private void cargarDetalle() {
         modelo.removeModel();
+         int row = 0;
+         TransferenciaDao objDao = FactoryDao.getFactoryInstance().getNewTransferenciaDao();
+        ArrayList<dto.Transferencia> listTransferencia = objDao.getList();
+        for (dto.Transferencia objTransferencia : listTransferencia) {           
+            
+           modelo.addEmptyRowsWithNumbers(1, header.length);
+
+            modelo.setValueAt(objTransferencia.getIdTransferencia(), row, 0);            
+            modelo.setValueAt(objTransferencia.getFechaHora(), row, 1);
+            modelo.setValueAt(objTransferencia.getFechaHora(), row, 2);
+            modelo.setValueAt(objTransferencia.getMonto(), row, 3);
+            modelo.setValueAt(objTransferencia.getDescripcion(), row, 4);
+            modelo.setValueAt(objTransferencia.getIdCuentaOrigen(), row, 5);
+            modelo.setValueAt(objTransferencia.getIdCuentaDestino(), row, 6);
+            row++;
+        }
 
     }
 
@@ -89,6 +99,7 @@ public class ListaTransferencia extends javax.swing.JFrame {
         rightRenderer.setHorizontalAlignment(position);
         table.getColumnModel().getColumn(column).setCellRenderer(rightRenderer);
     }
+   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -184,6 +195,14 @@ public class ListaTransferencia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    public static void main(String args[]) {
+       
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ListaTransferencia().setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;

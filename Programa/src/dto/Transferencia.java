@@ -1,18 +1,18 @@
 package dto;
 
+import java.util.Date;
+
 public class Transferencia {
 
     private int idTransferencia;
     private int idCuentaOrigen;
     private int idCuentaDestino;
-    private int idCategoria;
     private double monto;
-    private String fechaHora;
+    private Date fechaHora;
     private String descripcion;
-    private String tipo;
 
     public Transferencia() {
-        ;
+       
     }
 
     public int getIdTransferencia() {
@@ -39,14 +39,6 @@ public class Transferencia {
         this.idCuentaDestino = idCuentaDestino;
     }
 
-    public int getIdCategoria() {
-        return idCategoria;
-    }
-
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
-    }
-
     public double getMonto() {
         return monto;
     }
@@ -55,11 +47,11 @@ public class Transferencia {
         this.monto = monto;
     }
 
-    public String getFechaHora() {
+    public Date getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(String fechaHora) {
+    public void setFechaHora(Date fechaHora) {
         this.fechaHora = fechaHora;
     }
 
@@ -71,12 +63,5 @@ public class Transferencia {
         this.descripcion = descripcion;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
+   
 }

@@ -25,6 +25,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -61,6 +63,16 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu6.setText("Categoria");
+        jMenu6.setToolTipText("");
+        jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem4.setText("Categoria");
+        jMenu6.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu6);
+
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/transaccionlogo.png"))); // NOI18N
         jMenu2.setText("Transacciones");
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -77,7 +89,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/listatranicon.png"))); // NOI18N
-        jMenuItem2.setText("LISTA");
+        jMenuItem2.setText("Lista");
         jMenuItem2.setToolTipText("");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,10 +100,12 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/trans.png"))); // NOI18N
         jMenu3.setText("Transferencias");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icono_trans.png"))); // NOI18N
         jMenuItem8.setText("Transferencia");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +115,8 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem8);
 
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jMenuItem3.setText("LISTA");
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lista_transf.png"))); // NOI18N
+        jMenuItem3.setText("Lista");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -196,11 +211,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     // End of variables declaration//GEN-END:variables

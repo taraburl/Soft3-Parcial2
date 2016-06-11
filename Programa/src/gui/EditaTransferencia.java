@@ -5,8 +5,14 @@
  */
 package gui;
 
+import dao.TransferenciaDao;
+import dto.Cuenta;
+import factory.FactoryDao;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import org.apache.log4j.LogManager;
 
 /**
  *
@@ -14,20 +20,14 @@ import javax.swing.ImageIcon;
  */
 public class EditaTransferencia extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Transferencia
-     */
+    private static final org.apache.log4j.Logger logger = LogManager.getRootLogger();
+    private ArrayList<Cuenta> lisCuentas;
+    int idCuenta_ori = 0;
+    int idCuenta_des = 0;
+    Date fechaHora_actual = new Date();
+    int idTransferencia=0;
+    
     public EditaTransferencia() {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Transferencia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         initComponents();
         this.setLocationRelativeTo(this);
         obtenerfechaHoraActual();
@@ -35,13 +35,24 @@ public class EditaTransferencia extends javax.swing.JFrame {
         dtHora.setEnabled(false);
         txtSaldo_des.setEditable(false);
         txtSaldo_ori.setEditable(false);
+        llenarJcCuenta();
     }
 
     private void obtenerfechaHoraActual() {
         java.util.Date fecha = new Date();
         dtFecha.setDate(fecha);
         dtHora.setTime(fecha);
-
+        fechaHora_actual = fecha;
+    }
+    private void llenarJcCuenta() {
+        if (lisCuentas != null) {
+            jcCuenta_des.removeAllItems();
+            jcCuenta_ori.removeAllItems();
+            for (int i = 0; i < lisCuentas.size(); i++) {
+                jcCuenta_des.addItem(lisCuentas.get(i).getNombreCuenta());
+                jcCuenta_ori.addItem(lisCuentas.get(i).getNombreCuenta());
+            }
+        }
     }
 
     /**
@@ -61,21 +72,21 @@ public class EditaTransferencia extends javax.swing.JFrame {
         lbHora = new javax.swing.JLabel();
         dtHora = new lu.tudor.santec.jtimechooser.JTimeChooser();
         lbDescripcion = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        lbCuenta = new javax.swing.JLabel();
-        cbCuenta = new javax.swing.JComboBox<String>();
-        jLabel2 = new javax.swing.JLabel();
-        txtSaldo_des = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lbCuenta1 = new javax.swing.JLabel();
-        cbCuenta1 = new javax.swing.JComboBox<String>();
+        jcCuenta_ori = new javax.swing.JComboBox<String>();
         jLabel4 = new javax.swing.JLabel();
         txtSaldo_ori = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lbCuenta = new javax.swing.JLabel();
+        jcCuenta_des = new javax.swing.JComboBox<String>();
+        jLabel2 = new javax.swing.JLabel();
+        txtSaldo_des = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setTitle("TRANSFERENCIA");
         setIconImage(new ImageIcon("src/images/icono_trans.png").getImage());
@@ -100,53 +111,29 @@ public class EditaTransferencia extends javax.swing.JFrame {
 
         lbDescripcion.setText("DESCRIPCION:");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Destino"));
-
-        lbCuenta.setText("SELECCIONAR CUENTA:");
-
-        jLabel2.setText("SALDO:");
-
-        jLabel3.setText("Bs.");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbCuenta)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbCuenta, 0, 143, Short.MAX_VALUE)
-                    .addComponent(txtSaldo_des))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtSaldo_des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/modify_toolbar.png"))); // NOI18N
+        jButton1.setText("GUARDAR ");
+        jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Origen"));
 
         lbCuenta1.setText("SELECCIONAR CUENTA:");
+
+        jcCuenta_ori.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "212545", "2222", "56353" }));
+        jcCuenta_ori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcCuenta_oriActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("SALDO:");
 
@@ -163,7 +150,7 @@ public class EditaTransferencia extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbCuenta1, 0, 143, Short.MAX_VALUE)
+                    .addComponent(jcCuenta_ori, 0, 143, Short.MAX_VALUE)
                     .addComponent(txtSaldo_ori))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
@@ -175,7 +162,7 @@ public class EditaTransferencia extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCuenta1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCuenta1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcCuenta_ori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -184,18 +171,69 @@ public class EditaTransferencia extends javax.swing.JFrame {
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/modify_toolbar.png"))); // NOI18N
-        jButton1.setText("EDITAR TRANSFERIR");
-        jButton1.setToolTipText("");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Destino"));
+
+        lbCuenta.setText("SELECCIONAR CUENTA:");
+
+        jcCuenta_des.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "545454", "622", "01222" }));
+        jcCuenta_des.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcCuenta_desActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("SALDO:");
+
+        jLabel3.setText("Bs.");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbCuenta)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jcCuenta_des, 0, 143, Short.MAX_VALUE)
+                    .addComponent(txtSaldo_des))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcCuenta_des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtSaldo_des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(17, 17, 17)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,20 +248,9 @@ public class EditaTransferencia extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(50, 50, 50)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,13 +278,13 @@ public class EditaTransferencia extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -270,9 +297,50 @@ public class EditaTransferencia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMontoKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       if (!txtMonto.getText().isEmpty() && !txtDescripcion.getText().isEmpty() && idCuenta_des > 0 && idCuenta_ori > 0) {
+            if (Double.parseDouble(txtSaldo_ori.getText()) >= Double.parseDouble(txtMonto.getText())) {
+                try {
+                    TransferenciaDao objDao = FactoryDao.getFactoryInstance().getNewTransferenciaDao();
+
+                    dto.Transferencia obj = new dto.Transferencia();
+                    obj.setIdTransferencia(idTransferencia);
+                    obj.setMonto(Double.parseDouble(txtMonto.getText()));
+                    obj.setFechaHora(fechaHora_actual);
+                    obj.setDescripcion(txtDescripcion.getText());
+                    obj.setIdCuentaOrigen(idCuenta_ori);
+                    obj.setIdCuentaDestino(idCuenta_des);
+
+                    objDao.update(obj);
+                    
+                    JOptionPane.showMessageDialog(this, "Transferencia actualizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
+                    ListaTransferencia listaTransferencias = new ListaTransferencia();
+                    listaTransferencias.setVisible(true);
+                    this.hide();
+                } catch (Exception ex) {
+                    //logger.error("Error al realizar Transferencia: " + ex.toString());
+                    JOptionPane.showMessageDialog(this, "No se pudo actualizar la transferencia ", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Saldo insuficiente para actualizar la transferencia, su saldo actual es "
+                        + txtSaldo_ori.getText() + " Bs.", "MENSAJE", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese todos los campos correctamente", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jcCuenta_oriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcCuenta_oriActionPerformed
+        txtSaldo_ori.setText(jcCuenta_ori.getSelectedItem().toString());
+        idCuenta_ori = Integer.parseInt(jcCuenta_ori.getSelectedItem().toString());
+    }//GEN-LAST:event_jcCuenta_oriActionPerformed
+
+    private void jcCuenta_desActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcCuenta_desActionPerformed
+        txtSaldo_des.setText(jcCuenta_des.getSelectedItem().toString());
+        idCuenta_des = Integer.parseInt(jcCuenta_des.getSelectedItem().toString());
+    }//GEN-LAST:event_jcCuenta_desActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbCuenta;
-    private javax.swing.JComboBox<String> cbCuenta1;
     private com.toedter.calendar.JDateChooser dtFecha;
     private lu.tudor.santec.jtimechooser.JTimeChooser dtHora;
     private javax.swing.JButton jButton1;
@@ -284,6 +352,8 @@ public class EditaTransferencia extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> jcCuenta_des;
+    private javax.swing.JComboBox<String> jcCuenta_ori;
     private javax.swing.JLabel lbCuenta;
     private javax.swing.JLabel lbCuenta1;
     private javax.swing.JLabel lbDescripcion;
