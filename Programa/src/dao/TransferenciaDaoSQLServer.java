@@ -42,7 +42,7 @@ public class TransferenciaDaoSQLServer extends TransferenciaDao {
     public void update(Transferencia obj) throws Exception {
         Conexion objConexion = Conexion.getOrCreate();
 
-        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spUpdateTransferencia ?,?,?,?,?,?,?,?");
+        PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spUpdateTransferencia ?,?,?,?,?,?");
         ps.setInt(1, obj.getIdTransferencia());
         ps.setDouble(2, obj.getMonto());
         ps.setDate(3, (Date) obj.getFechaHora());
