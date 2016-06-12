@@ -36,10 +36,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jScrollBar1 = new javax.swing.JScrollBar();
-        pnSaldos = new javax.swing.JPanel();
-        pnCuentas = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lbTotal = new javax.swing.JLabel();
+        pnCuentas = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -62,34 +61,18 @@ public class Principal extends javax.swing.JFrame {
         setExtendedState(6);
         setIconImage(new ImageIcon("transaccion.png").getImage());
 
-        pnSaldos.setOpaque(false);
-
-        pnCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LISTA DE CUENTAS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
-        pnCuentas.setOpaque(false);
-
-        javax.swing.GroupLayout pnCuentasLayout = new javax.swing.GroupLayout(pnCuentas);
-        pnCuentas.setLayout(pnCuentasLayout);
-        pnCuentasLayout.setHorizontalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnCuentasLayout.setVerticalGroup(
-            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 228, Short.MAX_VALUE)
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALDO TOTAL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALDO TOTAL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24), new java.awt.Color(25, 121, 210))); // NOI18N
         jPanel2.setOpaque(false);
 
         lbTotal.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
-        lbTotal.setForeground(new java.awt.Color(204, 204, 204));
+        lbTotal.setForeground(new java.awt.Color(255, 255, 255));
         lbTotal.setText(" ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+            .addComponent(lbTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,25 +81,18 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(0, 14, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout pnSaldosLayout = new javax.swing.GroupLayout(pnSaldos);
-        pnSaldos.setLayout(pnSaldosLayout);
-        pnSaldosLayout.setHorizontalGroup(
-            pnSaldosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnSaldosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnSaldosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        pnCuentas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LISTA DE CUENTAS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 36), new java.awt.Color(33, 150, 243))); // NOI18N
+        pnCuentas.setOpaque(false);
+
+        javax.swing.GroupLayout pnCuentasLayout = new javax.swing.GroupLayout(pnCuentas);
+        pnCuentas.setLayout(pnCuentasLayout);
+        pnCuentasLayout.setHorizontalGroup(
+            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 185, Short.MAX_VALUE)
         );
-        pnSaldosLayout.setVerticalGroup(
-            pnSaldosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnSaldosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+        pnCuentasLayout.setVerticalGroup(
+            pnCuentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jMenu1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -191,12 +167,18 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(481, Short.MAX_VALUE)
-                .addComponent(pnSaldos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 446, Short.MAX_VALUE)
+                .addComponent(pnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnSaldos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(286, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(pnCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -278,7 +260,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollBar jScrollBar1;
     private static javax.swing.JLabel lbTotal;
     public static javax.swing.JPanel pnCuentas;
-    private javax.swing.JPanel pnSaldos;
     // End of variables declaration//GEN-END:variables
 
     public static void obtenerCuentas() {
@@ -293,7 +274,7 @@ public class Principal extends javax.swing.JFrame {
             lbTotal.setText(saldoTotal + " Bs.");
             JLabel lbCaja = new JLabel("NOMBRE: " + listCuenta.getNombreCuenta()+"  CUENTA: " + listCuenta.getSaldo() + " Bs.");
             lbCaja.setFont(new Font("Consolas", Font.BOLD, 18));
-            lbCaja.setForeground(/*new Color(204, 204, 204)*/Color.WHITE);
+            lbCaja.setForeground(Color.WHITE);
             pnCuentas.add(lbCaja);
         }
     }
