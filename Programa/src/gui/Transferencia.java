@@ -56,18 +56,19 @@ public class Transferencia extends javax.swing.JFrame {
             jcCuenta_des.removeAllItems();
             jcCuenta_ori.removeAllItems();
             for (int i = 0; i < lisCuentas.size(); i++) {
-                jcCuenta_des.addItem(lisCuentas.get(i).getNombreCuenta());
-                jcCuenta_ori.addItem(lisCuentas.get(i).getNombreCuenta());
+                jcCuenta_des.addItem(lisCuentas.get(i).getNombreCuenta().trim());
+                jcCuenta_ori.addItem(lisCuentas.get(i).getNombreCuenta().trim());
             }
         }
     }
 
-    public java.sql.Time convertJavaDateToSqlDate(Date fecha) throws java.text.ParseException {
+    public java.sql.Timestamp convertJavaDateToSqlTimestamp(Date fecha) throws java.text.ParseException {
 
-        java.sql.Time sqlDate = new java.sql.Time(fecha.getTime());
-        return sqlDate;
+        java.sql.Timestamp sqlTime = new java.sql.Timestamp(fecha.getTime());
+        return sqlTime;
 
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -321,8 +322,7 @@ public class Transferencia extends javax.swing.JFrame {
 
                         dto.Transferencia obj = new dto.Transferencia();
                         obj.setMonto(Double.parseDouble(txtMonto.getText()));
-                        System.out.println(" fecha es " +convertJavaDateToSqlDate(fechaHora_actual));
-                        obj.setFechaHora(convertJavaDateToSqlDate(fechaHora_actual));
+                        obj.setFechaHora(convertJavaDateToSqlTimestamp(fechaHora_actual));
                         obj.setDescripcion(txtDescripcion.getText());
                         obj.setIdCuentaOrigen(idCuenta_ori);
                         obj.setIdCuentaDestino(idCuenta_des);

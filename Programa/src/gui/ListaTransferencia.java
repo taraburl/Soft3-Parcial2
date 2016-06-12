@@ -40,7 +40,7 @@ public class ListaTransferencia extends javax.swing.JFrame {
     private void initTable() {
 
         header = new String[]{"ID", "FECHA", "HORA", "MONTO", "DESCRIPCION", "CUENTA ORIGEN", "CUENTA DESTINO"};
-        types = new Class[]{Integer.class, Date.class, String.class, Double.class, String.class, String.class, String.class};
+        types = new Class[]{Integer.class, String.class, String.class, Double.class, String.class, String.class, String.class};
 
         canEdit = new boolean[]{false, false, false, false, false, false, false};
 
@@ -53,10 +53,10 @@ public class ListaTransferencia extends javax.swing.JFrame {
         jtDetalle.getColumnModel().getColumn(0).setPreferredWidth(50);
         jtDetalle.getColumnModel().getColumn(1).setPreferredWidth(90);
         jtDetalle.getColumnModel().getColumn(2).setPreferredWidth(90);
-        jtDetalle.getColumnModel().getColumn(3).setPreferredWidth(90);
-        jtDetalle.getColumnModel().getColumn(4).setPreferredWidth(150);
-        jtDetalle.getColumnModel().getColumn(5).setPreferredWidth(150);
-        jtDetalle.getColumnModel().getColumn(6).setPreferredWidth(150);
+        jtDetalle.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jtDetalle.getColumnModel().getColumn(4).setPreferredWidth(180);
+        jtDetalle.getColumnModel().getColumn(5).setPreferredWidth(130);
+        jtDetalle.getColumnModel().getColumn(6).setPreferredWidth(130);
 
         alignText(jtDetalle, 0, JLabel.RIGHT);
         alignText(jtDetalle, 1, JLabel.RIGHT);
@@ -82,7 +82,7 @@ public class ListaTransferencia extends javax.swing.JFrame {
 
             modelo.setValueAt(objTransferencia.getIdTransferencia(), row, 0);
             modelo.setValueAt(objTransferencia.getFechaHora(), row, 1);
-            modelo.setValueAt(objTransferencia.getFechaHora()+"", row, 2);
+            modelo.setValueAt(objTransferencia.getFechaHora().getHours()+":"+objTransferencia.getFechaHora().getMinutes()+":"+objTransferencia.getFechaHora().getSeconds(), row, 2);
             modelo.setValueAt(objTransferencia.getMonto()+ " Bs.", row, 3);
             modelo.setValueAt(objTransferencia.getDescripcion(), row, 4);
             modelo.setValueAt(objTransferencia.getIdCuentaOrigen(), row, 5);

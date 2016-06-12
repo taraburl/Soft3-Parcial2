@@ -2,7 +2,7 @@ package dao;
 
 import dal.Conexion;
 import dto.Transferencia;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +23,7 @@ public class TransferenciaDaoSQLServer extends TransferenciaDao {
 
         PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spInsertTransferencia  ?,?,?,?,?");
         ps.setDouble(1, obj.getMonto());
-        ps.setDate(2, (Date) obj.getFechaHora());
+        ps.setTimestamp(2, (Timestamp) obj.getFechaHora());
         ps.setString(3, obj.getDescripcion());
         ps.setInt(4, obj.getIdCuentaOrigen());
         ps.setInt(5, obj.getIdCuentaDestino());
@@ -45,7 +45,7 @@ public class TransferenciaDaoSQLServer extends TransferenciaDao {
         PreparedStatement ps = objConexion.getObjConnection().prepareStatement("EXEC spUpdateTransferencia ?,?,?,?,?,?");
         ps.setInt(1, obj.getIdTransferencia());
         ps.setDouble(2, obj.getMonto());
-        ps.setDate(3, (Date) obj.getFechaHora());
+        ps.setTimestamp(3, (Timestamp) obj.getFechaHora());
         ps.setString(4, obj.getDescripcion());
         ps.setInt(5, obj.getIdCuentaOrigen());
         ps.setInt(6, obj.getIdCuentaDestino());
@@ -85,7 +85,7 @@ public class TransferenciaDaoSQLServer extends TransferenciaDao {
                 Double _monto = objResultSet.getDouble("monto");
                 obj.setMonto(_monto);
 
-                Date _fechahora = objResultSet.getDate("fechaHora");
+                Timestamp _fechahora = objResultSet.getTimestamp("fechaHora");
                 obj.setFechaHora(_fechahora);
 
                 String _descripcion = objResultSet.getString("descripcion");
@@ -121,7 +121,7 @@ public class TransferenciaDaoSQLServer extends TransferenciaDao {
                 Double _monto = objResultSet.getDouble("monto");
                 obj.setMonto(_monto);
 
-                Date _fechahora = objResultSet.getDate("fechaHora");
+                Timestamp _fechahora = objResultSet.getTimestamp("fechaHora");
                 obj.setFechaHora(_fechahora);
 
                 String _descripcion = objResultSet.getString("descripcion");

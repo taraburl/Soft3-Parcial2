@@ -36,21 +36,33 @@ public class EditaTransferencia extends javax.swing.JFrame {
         dtHora.setEnabled(false);
         txtSaldo_des.setEditable(false);
         txtSaldo_ori.setEditable(false);
+        jcCuenta_des.setEnabled(false);
+        jcCuenta_ori.setEnabled(false);
         llenarJcCuenta();
+        obtenerfechaHoraActual();
         llenarFormulario(idTrans);
         idTransferencia = idTrans;
+    }
+     private void obtenerfechaHoraActual() {
+        java.util.Date fecha = new Date();
+        dtFecha.setDate(fecha);
+        dtHora.setTime(fecha);
+        fechaHora_actual = fecha;
+
     }
 
     private void llenarFormulario(int id) {
         TransferenciaDao objDao = FactoryDao.getFactoryInstance().getNewTransferenciaDao();
         dto.Transferencia obj = new dto.Transferencia();
-        obj = objDao.get(id);
-        dtFecha.setDate(obj.getFechaHora());
-        dtHora.setTime(obj.getFechaHora());
+        obj = objDao.get(id);       
         txtMonto.setText(obj.getMonto() + "");
         txtDescripcion.setText(obj.getDescripcion());
-        jcCuenta_ori.setSelectedItem(obj.getIdCuentaOrigen());
-        jcCuenta_des.setSelectedItem(obj.getIdCuentaDestino());
+        CuentaDao objDao1 = FactoryDao.getFactoryInstance().getNewCuentaDao();
+        Cuenta cuenta1 = objDao1.get(obj.getIdCuentaOrigen());
+        jcCuenta_ori.setSelectedItem(cuenta1.getNombreCuenta().trim());
+        CuentaDao objDao2 = FactoryDao.getFactoryInstance().getNewCuentaDao();
+        Cuenta cuenta2 = objDao2.get(obj.getIdCuentaDestino());
+        jcCuenta_des.setSelectedItem(cuenta2.getNombreCuenta().trim());
     }
 
     private void llenarJcCuenta() {
@@ -60,15 +72,17 @@ public class EditaTransferencia extends javax.swing.JFrame {
             jcCuenta_des.removeAllItems();
             jcCuenta_ori.removeAllItems();
             for (int i = 0; i < lisCuentas.size(); i++) {
-                jcCuenta_des.addItem(lisCuentas.get(i).getNombreCuenta());
-                jcCuenta_ori.addItem(lisCuentas.get(i).getNombreCuenta());
+                jcCuenta_des.addItem(lisCuentas.get(i).getNombreCuenta().trim());
+                jcCuenta_ori.addItem(lisCuentas.get(i).getNombreCuenta().trim());
             }
         }
     }
 
-    public java.sql.Date convertJavaDateToSqlDate(Date fecha) throws java.text.ParseException {
-        java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
-        return sqlDate;
+     public java.sql.Timestamp convertJavaDateToSqlTimestamp(Date fecha) throws java.text.ParseException {
+
+        java.sql.Timestamp sqlTime = new java.sql.Timestamp(fecha.getTime());
+        return sqlTime;
+
     }
 
     /**
@@ -339,7 +353,7 @@ public class EditaTransferencia extends javax.swing.JFrame {
                         dto.Transferencia obj = new dto.Transferencia();
                         obj.setIdTransferencia(idTransferencia);
                         obj.setMonto(Double.parseDouble(txtMonto.getText()));
-                        obj.setFechaHora(convertJavaDateToSqlDate(fechaHora_actual));
+                        obj.setFechaHora(convertJavaDateToSqlTimestamp(fechaHora_actual));
                         obj.setDescripcion(txtDescripcion.getText());
                         obj.setIdCuentaOrigen(idCuenta_ori);
                         obj.setIdCuentaDestino(idCuenta_des);
