@@ -36,7 +36,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         tableModel();
         obtenerCuentas();
         cargarTodasTransacciones();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -57,9 +57,12 @@ public class ListaTransacciones extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("TRANSACCIONES");
+        setAlwaysOnTop(true);
         setIconImage(new ImageIcon("transaccion.png").getImage());
         setResizable(false);
 
@@ -130,6 +133,18 @@ public class ListaTransacciones extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar_transfe.png"))); // NOI18N
+        jButton2.setText("SALIR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        jLabel1.setText("TRANSACCIONES");
+
         javax.swing.GroupLayout pnTransaccionesLayout = new javax.swing.GroupLayout(pnTransacciones);
         pnTransacciones.setLayout(pnTransaccionesLayout);
         pnTransaccionesLayout.setHorizontalGroup(
@@ -140,11 +155,6 @@ public class ListaTransacciones extends javax.swing.JFrame {
                     .addComponent(jSeparator4)
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane1)
-                    .addGroup(pnTransaccionesLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTransaccionesLayout.createSequentialGroup()
                         .addComponent(lbCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,17 +164,28 @@ public class ListaTransacciones extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnMostrarTodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnTransaccionesLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnMostrarTodo, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTransaccionesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTransaccionesLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(164, 164, 164)))
                 .addContainerGap())
         );
         pnTransaccionesLayout.setVerticalGroup(
             pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTransaccionesLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jButton1)
+                .addGap(23, 23, 23)
+                .addGroup(pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -177,12 +198,13 @@ public class ListaTransacciones extends javax.swing.JFrame {
                     .addComponent(jSeparator3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnTransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -245,6 +267,10 @@ public class ListaTransacciones extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.hide();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
@@ -252,6 +278,8 @@ public class ListaTransacciones extends javax.swing.JFrame {
     private javax.swing.JButton btnMostrarTodo;
     private javax.swing.JComboBox<String> cbCuenta;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -268,7 +296,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         dtmTransacciones.addColumn("Tipo");
         dtmTransacciones.addColumn("Categoria");
         dtmTransacciones.addColumn("Descripcion");
-        dtmTransacciones.addColumn("ID Cuenta");
+        dtmTransacciones.addColumn("Nombre Cuenta");
         dtmTransacciones.addColumn("Monto Bs.");
         dtmTransacciones.addColumn("Fecha");
         dtmTransacciones.addColumn("Hora");
@@ -279,7 +307,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
         ArrayList<Transaccion> listTransaccion = objDao.getList();
         for (Transaccion objTransaccion : listTransaccion) {
-            Object datos[] = {objTransaccion.getIdTransaccion(), objTransaccion.getTipo(), obtenerCategoriaByID(objTransaccion.getIdCategoria()), objTransaccion.getDescripcion(), objTransaccion.getIdCuenta(), objTransaccion.getMonto(), objTransaccion.getFecha(), objTransaccion.getHora()};
+            Object datos[] = {objTransaccion.getIdTransaccion(), objTransaccion.getTipo(), obtenerCategoriaByID(objTransaccion.getIdCategoria()), objTransaccion.getDescripcion(), obtenerCuentaNombre(objTransaccion.getIdCuenta()), objTransaccion.getMonto(), objTransaccion.getFecha(), objTransaccion.getHora()};
             dtmTransacciones.addRow(datos);
         }
     }
@@ -288,7 +316,7 @@ public class ListaTransacciones extends javax.swing.JFrame {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
         ArrayList<Transaccion> listTransaccion = objDao.getListByCuenta(id);
         for (Transaccion objTransaccion : listTransaccion) {
-            Object datos[] = {objTransaccion.getIdTransaccion(), objTransaccion.getTipo(), obtenerCategoriaByID(objTransaccion.getIdCategoria()), objTransaccion.getDescripcion(), objTransaccion.getIdCuenta(), objTransaccion.getMonto(), objTransaccion.getFecha(), objTransaccion.getHora()};
+            Object datos[] = {objTransaccion.getIdTransaccion(), objTransaccion.getTipo(), obtenerCategoriaByID(objTransaccion.getIdCategoria()), objTransaccion.getDescripcion(), obtenerCuentaNombre(objTransaccion.getIdCuenta()), objTransaccion.getMonto(), objTransaccion.getFecha(), objTransaccion.getHora()};
             dtmTransacciones.addRow(datos);
         }
     }
@@ -296,6 +324,9 @@ public class ListaTransacciones extends javax.swing.JFrame {
     private void eliminar(int id) {
         TransaccionDao objDao = FactoryDao.getFactoryInstance().getNewTransaccionDao();
         objDao.delete(id);
+
+        Principal.obtenerCuentas();
+
         JOptionPane.showMessageDialog(this, "Transaccion ELiminada Correctamente", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -312,6 +343,12 @@ public class ListaTransacciones extends javax.swing.JFrame {
         lisCuentas.stream().forEach((list) -> {
             this.cbCuenta.addItem(list.getNombreCuenta());
         });
+    }
+    
+    private String obtenerCuentaNombre(int id){
+        CuentaDao objDao = FactoryDao.getFactoryInstance().getNewCuentaDao();
+        Cuenta cuenta = objDao.get(id);
+        return cuenta.getNombreCuenta();
     }
 
     private void obtenerIdCuenta(String nombre) {
