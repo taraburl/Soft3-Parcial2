@@ -175,6 +175,7 @@ public class ListaCuentas extends javax.swing.JFrame {
         } else {
             eliminar(Integer.parseInt(tblCuentas.getValueAt(fila, 0).toString()));
             dtmCuentas.removeRow(fila);
+
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -218,6 +219,8 @@ public class ListaCuentas extends javax.swing.JFrame {
         CuentaDao objDao = FactoryDao.getFactoryInstance().getNewCuentaDao();
         objDao.delete(id);
         Principal.obtenerCuentas();
+        this.hide();
+        new ListaCuentas().setVisible(true);
     }
 
 }

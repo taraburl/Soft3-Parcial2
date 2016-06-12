@@ -363,6 +363,7 @@ public class EditaTransferencia extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Transferencia actualizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
                         ListaTransferencia listaTransferencias = new ListaTransferencia();
                         listaTransferencias.setVisible(true);
+                        Principal.obtenerCuentas();
                         this.hide();
                     } catch (Exception ex) {
                         logger.debug("Error al realizar Transferencia: " + ex.toString());

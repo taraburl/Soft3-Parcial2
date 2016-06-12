@@ -192,6 +192,7 @@ public class Cuentas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "cuenta registrada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
             ListaCuentas listaCuentas = new ListaCuentas();
             listaCuentas.setVisible(true);
+            Principal.obtenerCuentas();
             this.hide();
         } catch (Exception ex) {
             logger.error("Error a crear la cuenta: " + ex.toString());

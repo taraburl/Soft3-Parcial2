@@ -229,7 +229,6 @@ public class Transferencia extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar_transfe.png"))); // NOI18N
         jButton4.setText("CANCELAR");
         jButton4.setToolTipText("");
@@ -333,6 +332,7 @@ public class Transferencia extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Transferencia realizada con exito", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
                         ListaTransferencia listaTransferencias = new ListaTransferencia();
                         listaTransferencias.setVisible(true);
+                        Principal.obtenerCuentas();
                         this.hide();
                     } catch (Exception ex) {
                         logger.debug("Error al realizar Transferencia: " + ex.toString());
@@ -379,8 +379,6 @@ public class Transferencia extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dtFecha;
     private lu.tudor.santec.jtimechooser.JTimeChooser dtHora;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

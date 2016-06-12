@@ -5,8 +5,10 @@ import dto.Cuenta;
 import factory.FactoryDao;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -25,7 +27,8 @@ public class Principal extends javax.swing.JFrame {
         this.add(p, BorderLayout.CENTER);
         p.repaint();
         obtenerCuentas();
-        pnCuentas.setLayout(new GridLayout(35, 1));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();      
+        pnCuentas.setLayout(new GridLayout(screenSize.height/30, 1));
     }
 
     @SuppressWarnings("unchecked")
@@ -272,10 +275,11 @@ public class Principal extends javax.swing.JFrame {
         for (Cuenta listCuenta : listCuentas) {
             saldoTotal = saldoTotal + listCuenta.getSaldo();
             lbTotal.setText(saldoTotal + " Bs.");
-            JLabel lbCaja = new JLabel("NOMBRE: " + listCuenta.getNombreCuenta()+"  CUENTA: " + listCuenta.getSaldo() + " Bs.");
+            JLabel lbCaja = new JLabel("NOMBRE: " + listCuenta.getNombreCuenta() + "  CUENTA: " + listCuenta.getSaldo() + " Bs.");
             lbCaja.setFont(new Font("Consolas", Font.BOLD, 18));
             lbCaja.setForeground(Color.WHITE);
             pnCuentas.add(lbCaja);
+            
         }
     }
 }

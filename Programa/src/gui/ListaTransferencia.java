@@ -238,14 +238,7 @@ public class ListaTransferencia extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public static void main(String args[]) {
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ListaTransferencia().setVisible(true);
-            }
-        });
-    }
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
