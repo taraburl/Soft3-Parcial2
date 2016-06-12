@@ -269,8 +269,8 @@ public class EditarTransaccion extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         obtenerIdCategoria(cbCategoria.getSelectedItem().toString());
-        obtenerCuenta(Integer.parseInt(txtNroCuenta.getText()));
-        if (!txtMonto.getText().isEmpty() && !txtDescripcion.getText().isEmpty() && idCategoria >= 0 && Integer.parseInt(txtNroCuenta.getText()) >= 0) {
+        obtenerCuenta(idCuenta);
+        if (!txtMonto.getText().isEmpty() && !txtDescripcion.getText().isEmpty() && idCategoria >= 0 ) {
             if (saldoCuenta >= Double.parseDouble(txtMonto.getText()) && cbTipoTransaccion.getSelectedItem().toString().equals("Gasto")) {
                 actualizar();
             } else if (cbTipoTransaccion.getSelectedItem().toString().equals("Ingreso")) {
